@@ -1,0 +1,29 @@
+    #gymoffer1 {
+        width: 35%;
+        height: 35%;
+        float: right;
+    }
+    
+    .offer {
+        display: block;
+        margin-block-start: 1em;
+        margin-block-end: 1em;
+        margin-inline-start: 0px;
+        margin-inline-end: 0px;
+    }
+    
+    .content {
+        width: 100%;
+    }
+    
+    .p {
+        float: left;
+        text-align: left;
+    }
+    
+    .column {
+        margin: 0px 0px 0px 2.6%;
+        float: left;
+        min-height: 1px;
+        position: relative;
+    }

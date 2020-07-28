@@ -32,11 +32,16 @@ header,
       </ul>
   </div>
   <div class="menu" style=>
-    <a class="btn btn-primary" href="#" role="button">Oferta</a>
-    <a class="btn btn-primary" href="#" role="button">Cennik</a></br>
+    <a class="btn btn-primary" href="/offer" role="button">Oferta</a>
+    <a class="btn btn-primary" href="/price" role="button">Cennik</a></br>
     <a class="btn btn-primary" href="#" role="button">Zajęcia</a>
-    <a class="btn btn-primary" href="#" role="button">Kontakt</a>
-  
+    <a class="btn btn-primary" href="/contact" role="button">Kontakt</a>
+    <a class="btn btn-primary" href="/register" role="button">Rejestracja</a>
+     <a class="btn btn-primary" href="/login" role="button">login</a>
+    <a class="btn btn-primary" href="/logout" role="button">logout</a>
+    {% if is_granted('ROLE_ADMIN') %}
+    <a class="btn btn-primary" href="/admin" role="button">Admin panel</a>
+    {% endif %}
   </div>
 
 
