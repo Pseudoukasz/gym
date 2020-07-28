@@ -28,12 +28,30 @@
         <tr>
             <td>{{user.id}}</td>
             <td>{{user.username}}</td>
-
+            <td>
+                <select>
+                    <option value=""> </option>
+                    <option value="ROLE_TRENER">Trener</option>
+                </select>
+            </td>
         </tr>
         {% endfor %}
     </table>
 </div>
+<div>
+    <h3>Nadaj uprawnienia</h3>
+    <select name="user" id="user">
+        <option value=""> </option>
+        {% for user in users %}
+        <option value="{{ user.username }}">{{ user.username }}</option>
+        {% endfor %}
+        
+    </select>
+    <select name="role" id="role">
+    <option value=""> </option>
+    <option value="ROLE_TRENER">Trener</option>
+    </select>
+    <button type="submit">Zapisz</button>
+</div>
 
-
-
-{% endblock %}
+{{form(form)}} {% endblock %}
