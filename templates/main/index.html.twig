@@ -36,9 +36,13 @@ header,
     <a class="btn btn-primary" href="/price" role="button">Cennik</a></br>
     <a class="btn btn-primary" href="#" role="button">Zajęcia</a>
     <a class="btn btn-primary" href="/contact" role="button">Kontakt</a>
+    {% if is_granted('IS_ANONYMOUS') %}
     <a class="btn btn-primary" href="/register" role="button">Rejestracja</a>
-     <a class="btn btn-primary" href="/login" role="button">login</a>
+    <a class="btn btn-primary" href="/login" role="button">login</a>
+    {% endif %}
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
     <a class="btn btn-primary" href="/logout" role="button">logout</a>
+    {% endif %}
     {% if is_granted('ROLE_ADMIN') %}
     <a class="btn btn-primary" href="/admin" role="button">Admin panel</a>
     {% endif %}

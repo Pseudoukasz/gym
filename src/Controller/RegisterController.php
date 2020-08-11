@@ -23,6 +23,9 @@ class RegisterController extends AbstractController
     {
         $form= $this->createFormBuilder()
             ->add('email')
+            ->add('imie')
+            ->add('nazwisko')
+            ->add('telefon')
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'required' => true,
@@ -40,6 +43,9 @@ class RegisterController extends AbstractController
                 $data = $form->getData();
                 $user = new User();
                 $user->setEmail($data['email']);
+                $user->setImie($data['imie']);
+                $user->setNazwisko($data['nazwisko']);
+                $user->setTelefon($data['telefon']);
                 $user->setPassword(
                     $passwordEncoder->encodePassword($user, $data['password'])
                 );

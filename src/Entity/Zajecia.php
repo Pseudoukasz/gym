@@ -28,6 +28,12 @@ class Zajecia
      */
     private $idTrener;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Sale::class, inversedBy="zajeciasala")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $Sala;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -53,6 +59,18 @@ class Zajecia
     public function setIdTrener(?Trener $idTrener): self
     {
         $this->idTrener = $idTrener;
+
+        return $this;
+    }
+
+    public function getSala(): ?Sale
+    {
+        return $this->Sala;
+    }
+
+    public function setSala(?Sale $Sala): self
+    {
+        $this->Sala = $Sala;
 
         return $this;
     }

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Zajecia{% endblock %}
+
+{% block body %}
+    <h1>Create new Zajecia</h1>
+
+    {{ include('zajecia/_form.html.twig') }}
+
+    <a href="{{ path('zajecia_index') }}">back to list</a>
+{% endblock %}

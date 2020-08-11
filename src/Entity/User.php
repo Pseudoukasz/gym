@@ -35,6 +35,21 @@ class User implements UserInterface
      */
     private $password;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $imie;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $nazwisko;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $telefon;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -111,5 +126,41 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getImie(): ?string
+    {
+        return $this->imie;
+    }
+
+    public function setImie(string $imie): self
+    {
+        $this->imie = $imie;
+
+        return $this;
+    }
+
+    public function getNazwisko(): ?string
+    {
+        return $this->nazwisko;
+    }
+
+    public function setNazwisko(string $nazwisko): self
+    {
+        $this->nazwisko = $nazwisko;
+
+        return $this;
+    }
+
+    public function getTelefon(): ?string
+    {
+        return $this->telefon;
+    }
+
+    public function setTelefon(string $telefon): self
+    {
+        $this->telefon = $telefon;
+
+        return $this;
     }
 }
