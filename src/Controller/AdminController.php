@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Trener;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\Id;
@@ -30,6 +31,7 @@ class AdminController extends AbstractController
         ])
         ->add('rola', ChoiceType::class,[
             'choices'=>[
+                ' ' => '',
                 'trener'=>'ROLE_TRAINER',
                 'klient'=>'ROLE_CUSTOMER',
             ],
@@ -48,6 +50,20 @@ class AdminController extends AbstractController
                 $em=$this->getDoctrine()->getManager();
                 $user=$em->getRepository(User::class)->find($data['urzytkownik']);
                 $user->setRoles([$data['rola']]);
+                if($data['rola']=="ROLE_TRAINER"){
+                    $imie=$user->getImie();
+                    $nazwisko=$user->getNazwisko();
+                    $trener= new Trener();
+                    $trener->setImie($imie);
+                    $trener->setNazwisko($nazwisko);
+                    //$trener->setImie($imie);
+                    //$trener->setNazwisko($user['nazwisko']);
+                    $em=$this->getDoctrine()->getManager();
+                    $em->persist($trener);
+                    $em->flush();
+                    //var_dump($user);
+
+                }
                 dump($data,$user);
                 $em->persist($user);
                 $em->flush();
