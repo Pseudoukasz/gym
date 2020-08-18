@@ -12,8 +12,12 @@
                 <td>{{ zajecium.id }}</td>
             </tr>
             <tr>
-                <th>Data</th>
+                <th>Data rozpoczecia</th>
                 <td>{{ zajecium.data ? zajecium.data|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Data zakonczenia</th>
+                <td>{{ zajecium.datazak ? zajecium.datazak|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
         </tbody>
     </table>

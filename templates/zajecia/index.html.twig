@@ -9,7 +9,11 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Data</th>
+                <th>Trener</th>
+                <th>Data rozpoczecia</th>
+                <th>Data zakonczenia</th>
+                <th>Sala</th>
+                <th>pojemność sali</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -17,7 +21,12 @@
         {% for zajecium in zajecias %}
             <tr>
                 <td>{{ zajecium.id }}</td>
+                <td>{{ zajecium.idTrener.imie  }} {{ zajecium.idTrener.nazwisko }}</td>
                 <td>{{ zajecium.data ? zajecium.data|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ zajecium.datazak ? zajecium.datazak|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ zajecium.sala.nazwa }}</td>
+                <td>{{ zajecium.sala.maxuzytkownikow }}</td>
+
                 <td>
                     <a href="{{ path('zajecia_show', {'id': zajecium.id}) }}">show</a>
                     <a href="{{ path('zajecia_edit', {'id': zajecium.id}) }}">edit</a>

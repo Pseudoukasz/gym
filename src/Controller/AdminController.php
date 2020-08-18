@@ -48,6 +48,7 @@ class AdminController extends AbstractController
                 //$data2=$data['urzytkownik'];
                 //$data3=$data['rola'];
                 $em=$this->getDoctrine()->getManager();
+                
                 $user=$em->getRepository(User::class)->find($data['urzytkownik']);
                 $user->setRoles([$data['rola']]);
                 if($data['rola']=="ROLE_TRAINER"){

@@ -11,10 +11,9 @@
 <div class="example-wrapper">
     <h1>Hello {{ controller_name }}! ✅</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/home/lukas/Desktop/projekty/gym/src/Controller/TrenerPanelController.php'|file_link(0) }}">src/Controller/TrenerPanelController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/home/lukas/Desktop/projekty/gym/templates/trener_panel/index.html.twig'|file_link(0) }}">templates/trener_panel/index.html.twig</a></code></li>
-    </ul>
+    {% if is_granted('ROLE_TRAINER') %}
+    <a class="btn btn-primary" href="/zajecia" role="button">Zajecia</a>
+    <a class="btn btn-primary" href="/zajecia/calendar" role="button">Kalendarz</a>
+    {% endif %}
 </div>
 {% endblock %}

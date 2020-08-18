@@ -22,6 +22,19 @@ class ZajeciaRepository extends ServiceEntityRepository
     // /**
     //  * @return Zajecia[] Returns an array of Zajecia objects
     //  */
+
+    public function getall($start, $end){
+    $zajeciaa = $this->zajeciaRepository
+            ->createQueryBuilder('zajecia')
+            ->where('zajecia.data BETWEEN :start and :end')
+            ->setParameter('start', $start)
+            ->setParameter('end', $end)
+            //->setParameter('start', $start->format('Y-m-d H:i:s'))
+            //->setParameter('end', $end->format('Y-m-d H:i:s'))
+            ->getQuery()
+            ->getResult()
+        ;
+    }
     /*
     public function findByExampleField($value)
     {

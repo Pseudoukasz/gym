@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -49,6 +51,16 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      */
     private $telefon;
+
+    /**
+     * @ORM\OneToMany(targetEntity=ZapisyNaZajecia::class, mappedBy="uzytkownik")
+     */
+    private $zajecia;
+
+    public function __construct()
+    {
+        $this->zajecia = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -160,6 +172,37 @@ class User implements UserInterface
     public function setTelefon(string $telefon): self
     {
         $this->telefon = $telefon;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ZapisyNaZajecia[]
+     */
+    public function getZajecia(): Collection
+    {
+        return $this->zajecia;
+    }
+
+    public function addZajecium(ZapisyNaZajecia $zajecium): self
+    {
+        if (!$this->zajecia->contains($zajecium)) {
+            $this->zajecia[] = $zajecium;
+            $zajecium->setUzytkownik($this);
+        }
+
+        return $this;
+    }
+
+    public function removeZajecium(ZapisyNaZajecia $zajecium): self
+    {
+        if ($this->zajecia->contains($zajecium)) {
+            $this->zajecia->removeElement($zajecium);
+            // set the owning side to null (unless already changed)
+            if ($zajecium->getUzytkownik() === $this) {
+                $zajecium->setUzytkownik(null);
+            }
+        }
 
         return $this;
     }
