@@ -8,6 +8,8 @@ use App\Entity\User;
 use App\Entity\Trener;
 use App\Form\ZajeciaType;
 use App\Repository\ZajeciaRepository;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,7 +30,10 @@ class ZajeciaController extends AbstractController
     public function index(ZajeciaRepository $zajeciaRepository): Response
     {
         $zz=$zajeciaRepository->findAll();
-        dump($zz);
+        //dump($zajecium);
+        $zajecia1=$zz['0'];
+        //$sala=$zajecia1->Sala;
+        dump($zz,$zajecia1);
         return $this->render('zajecia/index.html.twig', [
             'zajecias' => $zajeciaRepository->findAll(),
         ]);
@@ -50,17 +55,30 @@ class ZajeciaController extends AbstractController
         //$form = $this->createForm(ZajeciaType::class, $zajecium);
         $form = $this->createFormBuilder()
             ->add('nazwa')
-            ->add('data', DateTimeType::class,[ 
+            ->add('data', DateTimeType::class,[
                 'placeholder' => [
-                'year' => 'Year', 'month' => 'Month', 'day' => 'Day',
-                'hour' => 'Hour', 'minute' => 'Minute',
-            ] 
+                    'year' => 'Year', 'month' => 'Month', 'day' => 'Day',
+                    'hour' => 'Hour', 'minute' => 'Minute',
+                ]
             ])
-            ->add('datazak', DateTimeType::class,[ 
-                'placeholder' => [
-                'year' => 'Year', 'month' => 'Month', 'day' => 'Day',
-                'hour' => 'Hour', 'minute' => 'Minute',
-            ] 
+            ->add('data1', DateTimeType::class,[
+                'date_widget' => 'single_text',
+                'attr' => ['class' => 'form_datetime'],
+                'time_widget' => 'single_text',
+            ])
+            ->add('data2', DateType::class,[
+                'widget' => 'single_text',
+                'attr' => ['class' => 'js-datepicker']
+
+            ])
+            ->add('godzina', TimeType::class,[
+                'widget' => 'single_text',
+                'attr' => ['class' => 'js-datepicker3']
+
+            ])
+            ->add('datazak', DateType::class,[
+                'widget' => 'single_text',
+                'attr' => ['class' => 'js-datepicker']
             ])
             ->add('sala', EntityType::class,[
                 'class'=>Sale::class,
@@ -118,6 +136,7 @@ class ZajeciaController extends AbstractController
      */
     public function edit(Request $request, Zajecia $zajecium): Response
     {
+        
         $form = $this->createForm(ZajeciaType::class, $zajecium);
         $form->handleRequest($request);
 
