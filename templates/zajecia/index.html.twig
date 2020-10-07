@@ -28,8 +28,13 @@
                 <td>{{ zajecium.sala.maxuzytkownikow }}</td>
 
                 <td>
-                    <a href="{{ path('zajecia_show', {'id': zajecium.id}) }}">show</a>
-                    <a href="{{ path('zajecia_edit', {'id': zajecium.id}) }}">edit</a>
+                    {% if is_granted('ROLE_TRAINER') %}
+                        <a href="{{ path('zajecia_show', {'id': zajecium.id}) }}">show</a>
+                        <a href="{{ path('zajecia_edit', {'id': zajecium.id}) }}">edit</a>
+                    {% endif %}
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <a href="{{ path('zajecia_zapisz_sie', {'id': zajecium.id}) }}">zapisz się</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}

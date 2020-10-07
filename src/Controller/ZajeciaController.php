@@ -6,6 +6,7 @@ use App\Entity\Sale;
 use App\Entity\Zajecia;
 use App\Entity\User;
 use App\Entity\Trener;
+use App\Entity\ZapisyNaZajecia;
 use App\Form\ZajeciaType;
 use App\Repository\ZajeciaRepository;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -151,6 +152,25 @@ class ZajeciaController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+    /**
+     * @Route("/{id}/zapisz", name="zajecia_zapisz_sie", methods={"GET","POST"})
+     */
+    public function zapiszSieNaZajecia(Request $request, Zajecia $zajecium): Response
+    {
+        $idZajecia=$zajecium->getId();
+        $user=$this->getUser();
+        $zapis = new ZapisyNaZajecia();
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $zapis->setUzytkownik($user);
+        $zapis->setZajecia($zajecium);
+        $entityManager->persist($zapis);
+        $entityManager->flush();
+        //dump($idZajecia, $user, $request, $zajecium);die;
+
+        return $this->redirectToRoute('zajecia_index');
+    }
+
 
     /**
      * @Route("/{id}", name="zajecia_delete", methods={"DELETE"})
