@@ -1,49 +1,51 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Zajecia index{% endblock %}
-
 {% block body %}
-    <h1>Zajecia index</h1>
+    <a href="{{ path('zajecia_new') }}">Create new booking</a>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Trener</th>
-                <th>Data rozpoczecia</th>
-                <th>Data zakonczenia</th>
-                <th>Sala</th>
-                <th>pojemność sali</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for zajecium in zajecias %}
-            <tr>
-                <td>{{ zajecium.id }}</td>
-                <td>{{ zajecium.idTrener.imie  }} {{ zajecium.idTrener.nazwisko }}</td>
-                <td>{{ zajecium.data ? zajecium.data|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ zajecium.datazak ? zajecium.datazak|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ zajecium.sala.nazwa }}</td>
-                <td>{{ zajecium.sala.maxuzytkownikow }}</td>
+    <div id="calendar-holder"></div>
+{% endblock %}
 
-                <td>
-                    {% if is_granted('ROLE_TRAINER') %}
-                        <a href="{{ path('zajecia_show', {'id': zajecium.id}) }}">show</a>
-                        <a href="{{ path('zajecia_edit', {'id': zajecium.id}) }}">edit</a>
-                    {% endif %}
-                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                        <a href="{{ path('zajecia_zapisz_sie', {'id': zajecium.id}) }}">zapisz się</a>
-                    {% endif %}
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.css">
+{% endblock %}
 
-    <a href="{{ path('zajecia_new') }}">Create new</a>
+{% block javascripts %}
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@4.1.0/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.js"></script>
+
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', () => {
+            var calendarEl = document.getElementById('calendar-holder');
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                defaultView: 'dayGridMonth',
+                editable: true,
+                eventSources: [
+                    {
+                        url: "{{ path('fc_load_events') }}",
+                        method: "POST",
+                        extraParams: {
+                            filters: JSON.stringify({})
+                        },
+                        failure: () => {
+                            // alert("There was an error while fetching FullCalendar!");
+                        },
+                    },
+                ],
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay',
+                },
+                plugins: [ 'interaction', 'dayGrid', 'timeGrid' ], // https://fullcalendar.io/docs/plugin-index
+                timeZone: 'UTC',
+            });
+            calendar.render();
+        });
+    </script>
 {% endblock %}
