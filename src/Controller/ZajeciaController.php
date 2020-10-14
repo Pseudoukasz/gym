@@ -153,9 +153,9 @@ class ZajeciaController extends AbstractController
         ]);
     }
     /**
-     * @Route("/{id}/zapisz", name="zajecia_zapisz_sie", methods={"GET","POST"})
+     * @Route("/{id}/sign", name="sign_for_classes", methods={"GET","POST"})
      */
-    public function zapiszSieNaZajecia(Request $request, Zajecia $zajecium): Response
+    public function signForClasses(Request $request, Zajecia $zajecium): Response
     {
         $idZajecia=$zajecium->getId();
         $user=$this->getUser();
