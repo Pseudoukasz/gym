@@ -2,29 +2,29 @@
 
 namespace App\Repository;
 
-use App\Entity\Zajecia;
+use App\Entity\Classes;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Zajecia|null find($id, $lockMode = null, $lockVersion = null)
- * @method Zajecia|null findOneBy(array $criteria, array $orderBy = null)
- * @method Zajecia[]    findAll()
- * @method Zajecia[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Classes|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Classes|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Classes[]    findAll()
+ * @method Classes[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ZajeciaRepository extends ServiceEntityRepository
+class ClassesRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Zajecia::class);
+        parent::__construct($registry, Classes::class);
     }
 
     // /**
-    //  * @return Zajecia[] Returns an array of Zajecia objects
+    //  * @return Classes[] Returns an array of Classes objects
     //  */
 
     public function getall($start, $end){
-    $zajeciaa = $this->zajeciaRepository
+    $zajeciaa = $this->ClassesRepository
             ->createQueryBuilder('zajecia')
             ->where('zajecia.data BETWEEN :start and :end')
             ->setParameter('start', $start)
@@ -50,7 +50,7 @@ class ZajeciaRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Zajecia
+    public function findOneBySomeField($value): ?Classes
     {
         return $this->createQueryBuilder('z')
             ->andWhere('z.exampleField = :val')

@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\Trener;
+use App\Entity\Trainers;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Trener|null find($id, $lockMode = null, $lockVersion = null)
- * @method Trener|null findOneBy(array $criteria, array $orderBy = null)
- * @method Trener[]    findAll()
- * @method Trener[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Trainers|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Trainers|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Trainers[]    findAll()
+ * @method Trainers[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class TrenerRepository extends ServiceEntityRepository
+class TrainersRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Trener::class);
+        parent::__construct($registry, Trainers::class);
     }
 
     // /**
-    //  * @return Trener[] Returns an array of Trener objects
+    //  * @return Trainers[] Returns an array of Trainers objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class TrenerRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Trener
+    public function findOneBySomeField($value): ?Trainers
     {
         return $this->createQueryBuilder('t')
             ->andWhere('t.exampleField = :val')

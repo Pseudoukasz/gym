@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Entity\Trener;
+use App\Entity\Trainers;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\Id;
@@ -25,7 +25,7 @@ class AdminController extends AbstractController
         $users=$this->getDoctrine()->getRepository(User::class)->findAll();
         
         $form=$this->createFormBuilder()
-        ->add('urzytkownik', EntityType::class,[
+        ->add('user', EntityType::class,[
             'class'=>User::class,
             'choice_label'=>'email',
         ])
@@ -34,6 +34,7 @@ class AdminController extends AbstractController
                 ' ' => '',
                 'trener'=>'ROLE_TRAINER',
                 'klient'=>'ROLE_CUSTOMER',
+       //         'admin'=>'ROLE_ADMIN',
             ],
         ])
         ->add('zapisz', SubmitType::class, [
@@ -45,18 +46,16 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
             if($form ->isSubmitted()){
                 $data = $form->getData();
-                //$data2=$data['urzytkownik'];
-                //$data3=$data['rola'];
                 $em=$this->getDoctrine()->getManager();
                 
-                $user=$em->getRepository(User::class)->find($data['urzytkownik']);
+                $user=$em->getRepository(User::class)->find($data['user']);
                 $user->setRoles([$data['rola']]);
                 if($data['rola']=="ROLE_TRAINER"){
-                    $imie=$user->getImie();
-                    $nazwisko=$user->getNazwisko();
-                    $trener= new Trener();
-                    $trener->setImie($imie);
-                    $trener->setNazwisko($nazwisko);
+                    $imie=$user->getName();
+                    $nazwisko=$user->getSurname();
+                    $trener= new Trainers();
+                    $trener->setName($imie);
+                    $trener->setSurname($nazwisko);
                     //$trener->setImie($imie);
                     //$trener->setNazwisko($user['nazwisko']);
                     $em=$this->getDoctrine()->getManager();

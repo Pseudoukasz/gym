@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\ZapisyNaZajecia;
+use App\Entity\SignForClasses;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method ZapisyNaZajecia|null find($id, $lockMode = null, $lockVersion = null)
- * @method ZapisyNaZajecia|null findOneBy(array $criteria, array $orderBy = null)
- * @method ZapisyNaZajecia[]    findAll()
- * @method ZapisyNaZajecia[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method SignForClasses|null find($id, $lockMode = null, $lockVersion = null)
+ * @method SignForClasses|null findOneBy(array $criteria, array $orderBy = null)
+ * @method SignForClasses[]    findAll()
+ * @method SignForClasses[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ZapisyNaZajeciaRepository extends ServiceEntityRepository
+class SignForClassesRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, ZapisyNaZajecia::class);
+        parent::__construct($registry, SignForClasses::class);
     }
 
     // /**
-    //  * @return ZapisyNaZajecia[] Returns an array of ZapisyNaZajecia objects
+    //  * @return SignForClasses[] Returns an array of SignForClasses objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class ZapisyNaZajeciaRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?ZapisyNaZajecia
+    public function findOneBySomeField($value): ?SignForClasses
     {
         return $this->createQueryBuilder('z')
             ->andWhere('z.exampleField = :val')

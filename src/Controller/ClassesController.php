@@ -2,13 +2,13 @@
 
 namespace App\Controller;
 
-use App\Entity\Sale;
-use App\Entity\Zajecia;
+use App\Entity\Rooms;
+use App\Entity\Classes;
 use App\Entity\User;
-use App\Entity\Trener;
-use App\Entity\ZapisyNaZajecia;
-use App\Form\ZajeciaType;
-use App\Repository\ZajeciaRepository;
+use App\Entity\Trainers;
+use App\Entity\SignForClasses;
+use App\Form\ClassesType;
+use App\Repository\ClassesRepository;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,20 +23,20 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 /**
  * @Route("/zajecia")
  */
-class ZajeciaController extends AbstractController
+class ClassesController extends AbstractController
 {
     /**
      * @Route("/", name="zajecia_index", methods={"GET"})
      */
-    public function index(ZajeciaRepository $zajeciaRepository): Response
+    public function index(ClassesRepository $classesRepository): Response
     {
-        $zz=$zajeciaRepository->findAll();
+        $zz=$classesRepository->findAll();
         //dump($zajecium);
-        $zajecia1=$zz['0'];
+        //$zajecia1=$zz['0'];
         //$sala=$zajecia1->Sala;
-        dump($zz,$zajecia1);
+        //dump($zz,$zajecia1);
         return $this->render('zajecia/index.html.twig', [
-            'zajecias' => $zajeciaRepository->findAll(),
+            'zajecias' => $classesRepository->findAll(),
         ]);
     }
 
@@ -46,43 +46,43 @@ class ZajeciaController extends AbstractController
     public function new(Request $request): Response
     {
         $em=$this->getDoctrine()->getManager();
-        $sale=$this->getDoctrine()->getRepository(Sale::class)->findAll();
-        $zajecia = new Zajecia();
-        $id=$this->getUser()->getNazwisko();
+        $sale=$this->getDoctrine()->getRepository(Rooms::class)->findAll();
+        $zajecia = new Classes();
+        $id=$this->getUser()->getSurname();
         
-        $trener=$em->getRepository(Trener::class)->findOneBy(['Nazwisko' => $id]);
+        $trener=$em->getRepository(Trainers::class)->findOneBy(['surname' => $id]);
+
+
         
-        
-        //$form = $this->createForm(ZajeciaType::class, $zajecium);
+        //$form = $this->createForm(ClassesType::class, $zajecium);
         $form = $this->createFormBuilder()
             ->add('nazwa')
-            ->add('data', DateTimeType::class,[
+            /*->add('data', DateTimeType::class,[
                 'placeholder' => [
                     'year' => 'Year', 'month' => 'Month', 'day' => 'Day',
                     'hour' => 'Hour', 'minute' => 'Minute',
                 ]
-            ])
-            ->add('data1', DateTimeType::class,[
+            ])*/
+            ->add('data', DateTimeType::class,[
                 'date_widget' => 'single_text',
                 'attr' => ['class' => 'form_datetime'],
-                'time_widget' => 'single_text',
+                'placeholder' => [
+                    'hour' => 'Hour', 'minute' => 'Minute',
+                ]
             ])
-            ->add('data2', DateType::class,[
+            ->add('datazak', DateTimeType::class,[
+                'date_widget' => 'single_text',
+                'attr' => ['class' => 'form_datetime'],
+                'placeholder' => [
+                    'hour' => 'Hour', 'minute' => 'Minute',
+                ]
+            ])
+            /*->add('datazak', DateType::class,[
                 'widget' => 'single_text',
                 'attr' => ['class' => 'js-datepicker']
-
-            ])
-            ->add('godzina', TimeType::class,[
-                'widget' => 'single_text',
-                'attr' => ['class' => 'js-datepicker3']
-
-            ])
-            ->add('datazak', DateType::class,[
-                'widget' => 'single_text',
-                'attr' => ['class' => 'js-datepicker']
-            ])
+            ])*/
             ->add('sala', EntityType::class,[
-                'class'=>Sale::class,
+                'class'=>Rooms::class,
                 'choice_label'=>'nazwa',
             ])
             /*
@@ -103,11 +103,11 @@ class ZajeciaController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $data = $form->getData();
             dump($data);
-            $zajecia->setNazwa($data['nazwa']);
-            $zajecia->setData($data['data']);
-            $zajecia->setDatazak($data['datazak']);
-            $zajecia->setSala($data['sala']);
-            $zajecia->setIdTrener($trener);
+            $zajecia->setName($data['nazwa']);
+            $zajecia->setDateStart($data['data']);
+            $zajecia->setDateend($data['datazak']);
+            $zajecia->setRoom($data['sala']);
+            $zajecia->setTrainer($trener);
             //$zajecia->setIdTrener($data['idTrener']);
             $entityManager->persist($zajecia);
             $entityManager->flush();
@@ -124,7 +124,7 @@ class ZajeciaController extends AbstractController
     /**
      * @Route("/{id}", name="zajecia_show", methods={"GET"})
      */
-    public function show(Zajecia $zajecium): Response
+    public function show(Classes $zajecium): Response
     {
         
         return $this->render('zajecia/show.html.twig', [
@@ -135,10 +135,10 @@ class ZajeciaController extends AbstractController
     /**
      * @Route("/{id}/edit", name="zajecia_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Zajecia $zajecium): Response
+    public function edit(Request $request, Classes $zajecium): Response
     {
         
-        $form = $this->createForm(ZajeciaType::class, $zajecium);
+        $form = $this->createForm(ClassesType::class, $zajecium);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -155,15 +155,15 @@ class ZajeciaController extends AbstractController
     /**
      * @Route("/{id}/sign", name="sign_for_classes", methods={"GET","POST"})
      */
-    public function signForClasses(Request $request, Zajecia $zajecium): Response
+    public function signForClasses(Request $request, Classes $zajecium): Response
     {
         $idZajecia=$zajecium->getId();
         $user=$this->getUser();
-        $zapis = new ZapisyNaZajecia();
+        $zapis = new SignForClasses();
         $entityManager = $this->getDoctrine()->getManager();
 
-        $zapis->setUzytkownik($user);
-        $zapis->setZajecia($zajecium);
+        $zapis->setUser($user);
+        $zapis->setClasses($zajecium);
         $entityManager->persist($zapis);
         $entityManager->flush();
         //dump($idZajecia, $user, $request, $zajecium);die;
@@ -175,7 +175,7 @@ class ZajeciaController extends AbstractController
     /**
      * @Route("/{id}", name="zajecia_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, Zajecia $zajecium): Response
+    public function delete(Request $request, Classes $zajecium): Response
     {
         if ($this->isCsrfTokenValid('delete'.$zajecium->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();

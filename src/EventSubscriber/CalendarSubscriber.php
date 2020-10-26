@@ -2,10 +2,10 @@
 
 namespace App\EventSubscriber;
 
-use App\Entity\Zajecia;
+use App\Entity\Classes;
 use CalendarBundle\Entity\Event;
 use CalendarBundle\CalendarEvents;
-use App\Repository\ZajeciaRepository;
+use App\Repository\ClassesRepository;
 
 use CalendarBundle\Event\CalendarEvent;
 use Symfony\Component\BrowserKit\Request;
@@ -19,7 +19,7 @@ class CalendarSubscriber implements EventSubscriberInterface
     private $router;
 
     public function __construct(
-        ZajeciaRepository $zajeciaRepository,
+        ClassesRepository $zajeciaRepository,
         UrlGeneratorInterface $router
     ) {
         $this->zajeciaRepository = $zajeciaRepository;
@@ -46,7 +46,7 @@ class CalendarSubscriber implements EventSubscriberInterface
 
         // Modify the query to fit to your entity and needs
         // Change booking.beginAt by your start date property
-        //$bookings=$em->getRepository(Zajecia::class)->findAll();
+        //$bookings=$em->getRepository(Classes::class)->findAll();
         $zajeciaa=$this->zajeciaRepository->findAll();
         /*
         $zajeciaa = $this->zajeciaRepository

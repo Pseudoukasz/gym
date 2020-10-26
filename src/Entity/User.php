@@ -40,26 +40,31 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $imie;
+    private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $nazwisko;
+    private $surname;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $telefon;
+    private $phoneNumber;
 
     /**
-     * @ORM\OneToMany(targetEntity=ZapisyNaZajecia::class, mappedBy="uzytkownik")
+     * @ORM\OneToMany(targetEntity=SignForClasses::class, mappedBy="user")
      */
-    private $zajecia;
+    private $classes;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Memberships::class, inversedBy="users")
+     */
+    private $membership;
 
     public function __construct()
     {
-        $this->zajecia = new ArrayCollection();
+        $this->classes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -140,69 +145,81 @@ class User implements UserInterface
         // $this->plainPassword = null;
     }
 
-    public function getImie(): ?string
+    public function getName(): ?string
     {
-        return $this->imie;
+        return $this->name;
     }
 
-    public function setImie(string $imie): self
+    public function setName(string $name): self
     {
-        $this->imie = $imie;
+        $this->name = $name;
 
         return $this;
     }
 
-    public function getNazwisko(): ?string
+    public function getSurname(): ?string
     {
-        return $this->nazwisko;
+        return $this->surname;
     }
 
-    public function setNazwisko(string $nazwisko): self
+    public function setSurname(string $surname): self
     {
-        $this->nazwisko = $nazwisko;
+        $this->surname = $surname;
 
         return $this;
     }
 
-    public function getTelefon(): ?string
+    public function getPhoneNumber(): ?string
     {
-        return $this->telefon;
+        return $this->phoneNumber;
     }
 
-    public function setTelefon(string $telefon): self
+    public function setPhoneNumber(string $phoneNumber): self
     {
-        $this->telefon = $telefon;
+        $this->phoneNumber = $phoneNumber;
 
         return $this;
     }
 
     /**
-     * @return Collection|ZapisyNaZajecia[]
+     * @return Collection|SignForClasses[]
      */
-    public function getZajecia(): Collection
+    public function getClasses(): Collection
     {
-        return $this->zajecia;
+        return $this->classes;
     }
 
-    public function addZajecium(ZapisyNaZajecia $zajecium): self
+    public function addClasses(SignForClasses $classes): self
     {
-        if (!$this->zajecia->contains($zajecium)) {
-            $this->zajecia[] = $zajecium;
-            $zajecium->setUzytkownik($this);
+        if (!$this->classes->contains($classes)) {
+            $this->classes[] = $classes;
+            $classes->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeZajecium(ZapisyNaZajecia $zajecium): self
+    public function removeZajecium(SignForClasses $classes): self
     {
-        if ($this->zajecia->contains($zajecium)) {
-            $this->zajecia->removeElement($zajecium);
+        if ($this->classes->contains($classes)) {
+            $this->classes->removeElement($classes);
             // set the owning side to null (unless already changed)
-            if ($zajecium->getUzytkownik() === $this) {
-                $zajecium->setUzytkownik(null);
+            if ($classes->getUser() === $this) {
+                $classes->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getMembership(): ?Memberships
+    {
+        return $this->membership;
+    }
+
+    public function setMembership(?Memberships $membership): self
+    {
+        $this->membership = $membership;
 
         return $this;
     }
