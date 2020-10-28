@@ -33,8 +33,8 @@ class AdminController extends AbstractController
             'choices'=>[
                 ' ' => '',
                 'trener'=>'ROLE_TRAINER',
-                'klient'=>'ROLE_CUSTOMER',
-       //         'admin'=>'ROLE_ADMIN',
+               // 'klient'=>'ROLE_CUSTOMER',
+                'admin'=>'ROLE_ADMIN',
             ],
         ])
         ->add('zapisz', SubmitType::class, [
