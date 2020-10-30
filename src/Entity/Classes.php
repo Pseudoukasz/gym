@@ -109,12 +109,12 @@ class Classes
         return $this;
     }
 
-    public function getDateend(): ?\DateTimeInterface
+    public function getDateEnd(): ?\DateTimeInterface
     {
         return $this->date_end;
     }
 
-    public function setDateend(\DateTimeInterface $date_end): self
+    public function setDateEnd(\DateTimeInterface $date_end): self
     {
         $this->date_end = $date_end;
 

@@ -15,14 +15,14 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class CalendarSubscriber implements EventSubscriberInterface
 {
 
-    private $zajeciaRepository;
+    private $classesRepository;
     private $router;
 
     public function __construct(
-        ClassesRepository $zajeciaRepository,
+        ClassesRepository $classesRepository,
         UrlGeneratorInterface $router
     ) {
-        $this->zajeciaRepository = $zajeciaRepository;
+        $this->classesRepository = $classesRepository;
         $this->router = $router;
     }
 
@@ -47,11 +47,11 @@ class CalendarSubscriber implements EventSubscriberInterface
         // Modify the query to fit to your entity and needs
         // Change booking.beginAt by your start date property
         //$bookings=$em->getRepository(Classes::class)->findAll();
-        $zajeciaa=$this->zajeciaRepository->findAll();
+        $zajeciaa=$this->classesRepository->findAll();
         /*
         $zajeciaa = $this->zajeciaRepository
-            ->createQueryBuilder('zajecia')
-            ->where('zajecia.data BETWEEN :start and :end')
+            ->createQueryBuilder('classes')
+            ->where('classes.data BETWEEN :start and :end')
             ->setParameter('start', $start)
             ->setParameter('end', $end)
             //->setParameter('start', $start->format('Y-m-d H:i:s'))
@@ -64,11 +64,11 @@ class CalendarSubscriber implements EventSubscriberInterface
         foreach ($zajeciaa as $zajecia) {
             // this create the events with your data (here booking data) to fill calendar
             $bookingEvent = new Event(
-                $zajecia->getNazwa(),
-                $zajecia->getData(),
-                $zajecia->getDatazak()
-                //$zajecia->getIdTrener(),
-                //$zajecia->getSala() // If the end date is null or not defined, a all day event is created.
+                $zajecia->getName(),
+                $zajecia->getDateStart(),
+                $zajecia->getDateEnd()
+                //$classes->getIdTrener(),
+                //$classes->getSala() // If the end date is null or not defined, a all day event is created.
             );
 
             /*

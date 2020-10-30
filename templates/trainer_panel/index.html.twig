@@ -9,11 +9,11 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1>Panel trenera </h1>
 
     {% if is_granted('ROLE_TRAINER') %}
-    <a class="btn btn-primary" href="/zajecia" role="button">Zajecia</a>
-    <a class="btn btn-primary" href="/zajecia/calendar" role="button">Kalendarz</a>
+    <a class="btn btn-primary" href="/classes" role="button">Zajecia</a>
+    <a class="btn btn-primary" href="/classes/calendar" role="button">Kalendarz</a>
     {% endif %}
 </div>
 {% endblock %}

@@ -9,22 +9,22 @@
         <tbody>
             <tr>
                 <th>Id</th>
-                <td>{{ zajecium.id }}</td>
+                <td>{{ class.id }}</td>
             </tr>
             <tr>
                 <th>Data rozpoczecia</th>
-                <td>{{ zajecium.data ? zajecium.data|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ class.dateStart ? class.dateStart|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
                 <th>Data zakonczenia</th>
-                <td>{{ zajecium.datazak ? zajecium.datazak|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ class.dateend ? class.dateend|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
         </tbody>
     </table>
 
     <a href="{{ path('zajecia_index') }}">back to list</a>
 
-    <a href="{{ path('zajecia_edit', {'id': zajecium.id}) }}">edit</a>
+    <a href="{{ path('zajecia_edit', {'id': class.id}) }}">edit</a>
 
-    {{ include('zajecia/_delete_form.html.twig') }}
+    {{ include('classes/_delete_form.html.twig') }}
 {% endblock %}

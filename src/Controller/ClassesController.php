@@ -21,7 +21,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 /**
- * @Route("/zajecia")
+ * @Route("/classes")
  */
 class ClassesController extends AbstractController
 {
@@ -35,8 +35,8 @@ class ClassesController extends AbstractController
         //$zajecia1=$zz['0'];
         //$sala=$zajecia1->Sala;
         //dump($zz,$zajecia1);
-        return $this->render('zajecia/index.html.twig', [
-            'zajecias' => $classesRepository->findAll(),
+        return $this->render('classes/index.html.twig', [
+            //'classes' => $classesRepository->findAll(),
         ]);
     }
 
@@ -83,7 +83,7 @@ class ClassesController extends AbstractController
             ])*/
             ->add('sala', EntityType::class,[
                 'class'=>Rooms::class,
-                'choice_label'=>'nazwa',
+                'choice_label'=>'name',
             ])
             /*
             ->add('idTrener', HiddenType::class,[
@@ -105,17 +105,17 @@ class ClassesController extends AbstractController
             dump($data);
             $zajecia->setName($data['nazwa']);
             $zajecia->setDateStart($data['data']);
-            $zajecia->setDateend($data['datazak']);
+            $zajecia->setDateEnd($data['datazak']);
             $zajecia->setRoom($data['sala']);
             $zajecia->setTrainer($trener);
-            //$zajecia->setIdTrener($data['idTrener']);
+            //$classes->setIdTrener($data['idTrener']);
             $entityManager->persist($zajecia);
             $entityManager->flush();
 
             return $this->redirectToRoute('zajecia_index');
         }
 
-        return $this->render('zajecia/new.html.twig', [
+        return $this->render('classes/new.html.twig', [
             //'zajecium' => $zajecium,
             'form' => $form->createView(),
         ]);
@@ -124,11 +124,11 @@ class ClassesController extends AbstractController
     /**
      * @Route("/{id}", name="zajecia_show", methods={"GET"})
      */
-    public function show(Classes $zajecium): Response
+    public function show(Classes $class): Response
     {
         
-        return $this->render('zajecia/show.html.twig', [
-            'zajecium' => $zajecium,
+        return $this->render('classes/show.html.twig', [
+            'class' => $class,
         ]);
     }
 
@@ -147,7 +147,7 @@ class ClassesController extends AbstractController
             return $this->redirectToRoute('zajecia_index');
         }
 
-        return $this->render('zajecia/edit.html.twig', [
+        return $this->render('classes/edit.html.twig', [
             'zajecium' => $zajecium,
             'form' => $form->createView(),
         ]);

@@ -5,9 +5,9 @@
 {% block body %}
     <h1>Edit Zajecia</h1>
 
-    {{ include('zajecia/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('classes/_form.html.twig', {'button_label': 'Update'}) }}
 
     <a href="{{ path('zajecia_index') }}">back to list</a>
 
-    {{ include('zajecia/_delete_form.html.twig') }}
+    {{ include('classes/_delete_form.html.twig') }}
 {% endblock %}

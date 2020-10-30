@@ -25,8 +25,8 @@ class ClassesRepository extends ServiceEntityRepository
 
     public function getall($start, $end){
     $zajeciaa = $this->ClassesRepository
-            ->createQueryBuilder('zajecia')
-            ->where('zajecia.data BETWEEN :start and :end')
+            ->createQueryBuilder('classes')
+            ->where('classes.data BETWEEN :start and :end')
             ->setParameter('start', $start)
             ->setParameter('end', $end)
             //->setParameter('start', $start->format('Y-m-d H:i:s'))

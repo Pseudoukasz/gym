@@ -47,9 +47,11 @@ class AdminController extends AbstractController
             if($form ->isSubmitted()){
                 $data = $form->getData();
                 $em=$this->getDoctrine()->getManager();
-                
+
                 $user=$em->getRepository(User::class)->find($data['user']);
-                $user->setRoles([$data['rola']]);
+
+                //$role = $user->getRoles();
+                //$user->setRoles([$role, $data['rola']]);
                 if($data['rola']=="ROLE_TRAINER"){
                     $imie=$user->getName();
                     $nazwisko=$user->getSurname();
