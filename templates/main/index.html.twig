@@ -6,27 +6,23 @@
 {% block body %}
 
 
-  <div class="menu" style=>
-    <a class="btn btn-primary" href="/offer" role="button">Oferta</a>
-    <a class="btn btn-primary" href="/price" role="button">Cennik</a></br>
-    <a class="btn btn-primary" href="/zajecia" role="button">Zajęcia</a>
-    <a class="btn btn-primary" href="/contact" role="button">Kontakt</a>
-    {% if is_granted('IS_ANONYMOUS') %}
-    <a class="btn btn-primary" href="/register" role="button">Rejestracja</a>
-    <a class="btn btn-primary" href="/login" role="button">login</a>
-    {% endif %}
-    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-    <a class="btn btn-primary" href="/logout" role="button">logout</a>
-    {% endif %}
-    {% if is_granted('ROLE_ADMIN') %}
-    <a class="btn btn-primary" href="/admin" role="button">Admin panel</a>
-    {% endif %}
-    {% if is_granted('ROLE_TRAINER') %}
-    <a class="btn btn-primary" href="/trener/panel" role="button">Trener panel</a>
-    {% endif %}
-  </div>
+    <style>
+
+        body, html {
+            height: 100%;
+        }
+        html,
+        body,
+        header,
+        .view {
+            height: 100%;
+        }
+    </style>
+    <div class="view" style="background-image: url('../images/background.jpg'); background-repeat: no-repeat; background-size: cover; background-position: center center;">
+        <!-- Mask & flexbox options-->
 
 
 
-</div> 
+
+    </div> 
 {% endblock %}
