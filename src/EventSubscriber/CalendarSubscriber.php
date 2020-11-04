@@ -10,6 +10,8 @@ use CalendarBundle\Event\CalendarEvent;
 use Symfony\Component\BrowserKit\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Security\Core\Security;
 
 class CalendarSubscriber implements EventSubscriberInterface
@@ -89,19 +91,32 @@ class CalendarSubscriber implements EventSubscriberInterface
             //$zajecia->getId();
 
             //var_dump($id);
-            if($isSignied = $this->signForClassesRepository->findOneBy(
-                ['classes' => $zajecia->getId(),
-                'user' =>  $this->security->getUser()])){
+            if($this->security->isGranted('IS_AUTHENTICATED_FULLY')) {
 
-                $bookingEvent->setOptions([
-                    'backgroundColor' => 'red',
-                    'borderColor' => 'red',
-                ]);
+                if ($this->signForClassesRepository->findOneBy(['classes' => $zajecia->getId(), 'user' => $this->security->getUser()])
+                    || $zajecia->getRoom()->getMaxNumberOfUsers() <=  $this->signForClassesRepository->findBy(['classes' => $zajecia->getId()])) {
+
+                    $bookingEvent->setOptions(
+                        [
+                            'backgroundColor' => 'red',
+                            'borderColor' => 'red',
+                        ]
+                    );
+                } else {
+                    $bookingEvent->setOptions(
+                        [
+                            'backgroundColor' => 'green',
+                            'borderColor' => 'green',
+                        ]
+                    );
+                }
             } else {
-                $bookingEvent->setOptions([
-                    'backgroundColor' => 'green',
-                    'borderColor' => 'green',
-                ]);
+                $bookingEvent->setOptions(
+                    [
+                        'backgroundColor' => 'green',
+                        'borderColor' => 'green',
+                    ]
+                );
             }
 
             $bookingEvent->addOption(
