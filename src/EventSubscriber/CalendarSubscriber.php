@@ -2,28 +2,35 @@
 
 namespace App\EventSubscriber;
 
-use App\Entity\Classes;
 use CalendarBundle\Entity\Event;
 use CalendarBundle\CalendarEvents;
 use App\Repository\ClassesRepository;
-
+use App\Repository\SignForClassesRepository;
 use CalendarBundle\Event\CalendarEvent;
 use Symfony\Component\BrowserKit\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Security\Core\Security;
 
 class CalendarSubscriber implements EventSubscriberInterface
 {
 
     private $classesRepository;
+    private $signForClassesRepository;
     private $router;
+    private $security;
+    private $user;
 
     public function __construct(
         ClassesRepository $classesRepository,
-        UrlGeneratorInterface $router
+        UrlGeneratorInterface $router,
+        SignForClassesRepository $signForClassesRepository,
+        Security $security
     ) {
         $this->classesRepository = $classesRepository;
+        $this->signForClassesRepository = $signForClassesRepository;
         $this->router = $router;
+        $this->security = $security;
     }
 
 
@@ -36,6 +43,7 @@ class CalendarSubscriber implements EventSubscriberInterface
 
     public function onCalendarSetData(CalendarEvent $calendar)
     {
+        $id = $this->security->getUser()->getId();
         
         //$start = $calendar->getStart();
         $start='2020-08-10 00:00:00';
@@ -77,11 +85,25 @@ class CalendarSubscriber implements EventSubscriberInterface
              * For more information see: https://fullcalendar.io/docs/event-object
              * and: https://github.com/fullcalendar/fullcalendar/blob/master/src/core/options.ts
              */
+            //var_dump($zajecia->getId());die;
+            //$zajecia->getId();
 
-            $bookingEvent->setOptions([
-                'backgroundColor' => 'red',
-                'borderColor' => 'red',
-            ]);
+            //var_dump($id);
+            if($isSignied = $this->signForClassesRepository->findOneBy(
+                ['classes' => $zajecia->getId(),
+                'user' =>  $this->security->getUser()])){
+
+                $bookingEvent->setOptions([
+                    'backgroundColor' => 'red',
+                    'borderColor' => 'red',
+                ]);
+            } else {
+                $bookingEvent->setOptions([
+                    'backgroundColor' => 'green',
+                    'borderColor' => 'green',
+                ]);
+            }
+
             $bookingEvent->addOption(
                 'url',
                 $this->router->generate('zajecia_show', [

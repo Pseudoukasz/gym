@@ -25,6 +25,9 @@
     <a href="{{ path('zajecia_index') }}">back to list</a>
 
     <a href="{{ path('zajecia_edit', {'id': class.id}) }}">edit</a>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <a href="{{ path('sign_for_classes', {'id': class.id}) }}">zapisz się</a>
+    {% endif %}
 
     {{ include('classes/_delete_form.html.twig') }}
 {% endblock %}
