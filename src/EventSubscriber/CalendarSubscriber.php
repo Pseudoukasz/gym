@@ -45,7 +45,6 @@ class CalendarSubscriber implements EventSubscriberInterface
 
     public function onCalendarSetData(CalendarEvent $calendar)
     {
-        $id = $this->security->getUser()->getId();
         
         //$start = $calendar->getStart();
         $start='2020-08-10 00:00:00';
