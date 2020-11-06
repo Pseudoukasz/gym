@@ -93,7 +93,7 @@ class CalendarSubscriber implements EventSubscriberInterface
             if($this->security->isGranted('IS_AUTHENTICATED_FULLY')) {
 
                 if ($this->signForClassesRepository->findOneBy(['classes' => $zajecia->getId(), 'user' => $this->security->getUser()])
-                    || $zajecia->getRoom()->getMaxNumberOfUsers() <=  $this->signForClassesRepository->findBy(['classes' => $zajecia->getId()])) {
+                    || $zajecia->getRoom()->getMaxNumberOfUsers() <= count($this->signForClassesRepository->findBy(['classes' => $zajecia->getId()]))) {
 
                     $bookingEvent->setOptions(
                         [
