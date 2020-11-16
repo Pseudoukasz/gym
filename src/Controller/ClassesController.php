@@ -11,6 +11,7 @@ use App\Form\ClassesType;
 use App\Repository\ClassesRepository;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,7 +27,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 class ClassesController extends AbstractController
 {
     /**
-     * @Route("/", name="zajecia_index", methods={"GET"})
+     * @Route("/", name="zajecia_index", methods={"GET","POST"})
      */
     public function index(ClassesRepository $classesRepository): Response
     {
@@ -41,21 +42,23 @@ class ClassesController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="zajecia_new", methods={"GET","POST"})
+     * @Route("/", name="zajecia_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
+
         $em=$this->getDoctrine()->getManager();
         $sale=$this->getDoctrine()->getRepository(Rooms::class)->findAll();
         $zajecia = new Classes();
         $id=$this->getUser()->getSurname();
-        
+        var_dump($id);
+
         $trener=$em->getRepository(Trainers::class)->findOneBy(['surname' => $id]);
 
 
         
         //$form = $this->createForm(ClassesType::class, $zajecium);
-        $form = $this->createFormBuilder()
+        $form = $this->createFormBuilder(null, array('attr' =>array('class'=> 'new_form')))
             ->add('nazwa')
             /*->add('data', DateTimeType::class,[
                 'placeholder' => [
@@ -91,13 +94,22 @@ class ClassesController extends AbstractController
             ]) */
             ->add('zapisz', SubmitType::class, [
                 'attr'=>[
-                    'class'=>'btn btn-danger float-rignt'
+                    'class'=>'btn btn-danger float-rignt',
+                    'id' => 'submit'
             ]])
             ->getForm();    
             
         // tu skonczyłem, zrobic formulaz dodajocy wydazenie, ogarnać wyświetlanie kaledarza
 
-        $form->handleRequest($request);
+     /*   if(!$request->isXmlHttpRequest()){
+            return new JsonResponse(array(
+                'status' =>'Error',
+                    'message' => 'Error'
+                ), 400
+            );
+        }*/
+        $data = json_decode($request->getContent(),true);
+       // $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -112,7 +124,7 @@ class ClassesController extends AbstractController
             $entityManager->persist($zajecia);
             $entityManager->flush();
 
-            return $this->redirectToRoute('zajecia_index');
+           // return $this->redirectToRoute('zajecia_index');
         }
 
         return $this->render('classes/new.html.twig', [

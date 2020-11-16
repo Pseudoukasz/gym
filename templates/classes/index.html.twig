@@ -1,7 +1,47 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <a class="btn btn-primary" href="{{ path('zajecia_new') }}">Stwórz wydarzenie</a>
+    <a class="btn btn-primary"  id="add_new_classes" href="{{ path('zajecia_new') }}">Stwórz wydarzenie</a>
+   {#  <button type="button" id="add_new_classes"
+            data-title="Dodaj nowe zajęcia" class="btn btn-success">
+        Swtórz nowe zajęcia
+    </button>
+    <a data-toggle="add" href="{{ path('zajecia_new') }}" data-target="#form1" >new</a>
+    <div id="form1"></div>#}
+    {#<div class="model">
+        {{ render(controller(
+            'App\\Controller\\ClassesController::new'
+        )) }}
+    </div>#}
+
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        Launch demo modal
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="body">
+                    {{ render(controller(
+                        'App\\Controller\\ClassesController::new'
+                    )) }}
+                   {# {{ include('classes/new.html.twig') }}#}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <div id="calendar-holder"></div>
 {% endblock %}
@@ -11,13 +51,20 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.css">
+    <!-- dialog box -->
+    {#<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">#}
 {% endblock %}
 
 {% block javascripts %}
+    {{ parent() }}
     <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@4.1.0/main.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.js"></script>
+    <!-- dialog box -->
+    <script src="{{ asset('js/classes.js') }}"></script>
+    {#<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>#}
 
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', () => {
@@ -48,5 +95,14 @@
             });
             calendar.render();
         });
+        $(document).ready(function (){
+            var $wrapper =$('.modal-body');
+
+            //RepLogApp.initialize($table);
+            var repLogApp = new RepLogApp($wrapper);
+        });
+
+
     </script>
 {% endblock %}
+
