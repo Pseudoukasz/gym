@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html>
     <head>
         <meta charset="UTF-8">
@@ -45,24 +46,39 @@
                 </ul>
             </div>
             <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-                <ul class="navbar-nav ml-auto">
-                    <li class="form-inline my-2 my-sm-0">
-                        <a class="nav-link" href="/login">Zaloguj</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/register">Rejestracja</a>
-                    </li>
-                </ul>
+
+                {% if is_granted('IS_ANONYMOUS') %}
+                    <ul class="navbar-nav ml-auto">
+                        <li class="form-inline my-2 my-sm-0">
+                            <a class="nav-link" href="/login">Zaloguj</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/register">Rejestracja</a>
+                        </li>
+                    </ul>
+                {% endif %}
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <ul class="navbar-nav ml-auto">
+                         <li class="form-inline my-2 my-sm-0">
+                            <label class="nav-label" >Witaj, {{ app.user.username }}</label>
+                        </li>
+                        <li class="form-inline my-2 my-sm-0">
+                            <a class="nav-link" href="/logout">Wyloguj</a>
+                        </li>
+                    </ul>
+                {% endif %}
             </div>
         </nav>
 
 
     {% endblock %}
-    {% block body %}{% endblock %}
+    {% block body %}
+    {% endblock %}
     {% block javascripts %}{% endblock %}
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 
 </body>
+<div class="view" style="background-image: url('../images/background.jpg'); background-repeat: no-repeat; background-size: cover; background-position: center center;">
 </html>
