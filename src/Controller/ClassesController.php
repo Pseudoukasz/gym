@@ -10,6 +10,7 @@ use App\Entity\SignForClasses;
 use App\Form\ClassesType;
 use App\Repository\ClassesRepository;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,35 +30,84 @@ class ClassesController extends AbstractController
     /**
      * @Route("/", name="zajecia_index", methods={"GET","POST"})
      */
-    public function index(ClassesRepository $classesRepository): Response
+    public function index(ClassesRepository $classesRepository, Request $request): Response
     {
-        $zz=$classesRepository->findAll();
-        //dump($zajecium);
-        //$zajecia1=$zz['0'];
-        //$sala=$zajecia1->Sala;
-        //dump($zz,$zajecia1);
-        return $this->render('classes/index.html.twig', [
-            //'classes' => $classesRepository->findAll(),
-        ]);
-    }
-
-    /**
-     * @Route("/", name="zajecia_new", methods={"GET","POST"})
-     */
-    public function new(Request $request): Response
-    {
-
         $em=$this->getDoctrine()->getManager();
         $sale=$this->getDoctrine()->getRepository(Rooms::class)->findAll();
         $zajecia = new Classes();
         $id=$this->getUser()->getSurname();
-        var_dump($id);
-
+        //var_dump($id);
         $trener=$em->getRepository(Trainers::class)->findOneBy(['surname' => $id]);
 
+        $form = $this->createFormBuilder(null, array('attr' =>array('class'=> 'new_form')))
+            ->add('name')
 
-        
-        //$form = $this->createForm(ClassesType::class, $zajecium);
+            ->add('date_start', DateTimeType::class,[
+                'date_widget' => 'single_text',
+                'attr' => ['class' => 'form_datetime'],
+                'placeholder' => [
+                    'hour' => 'Hour', 'minute' => 'Minute',
+                ]
+            ])
+            ->add('date_end', DateTimeType::class,[
+                'date_widget' => 'single_text',
+                'attr' => ['class' => 'form_datetime'],
+                'placeholder' => [
+                    'hour' => 'Hour', 'minute' => 'Minute',
+                    'class' => 'form-control'
+                ]
+            ])
+
+            ->add('room', EntityType::class,[
+                'class'=>Rooms::class,
+                'choice_label'=>'name',
+            ])
+
+            ->add('submit', SubmitType::class, [
+                'attr'=>[
+                    'class'=>'btn btn-danger float-left',
+                    'id' => 'submit'
+                ]])
+            ->getForm();
+
+        // tu skonczyłem, zrobic formulaz dodajocy wydazenie, ogarnać wyświetlanie kaledarza
+
+        $data = json_decode($request->getContent(),true);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $data = $form->getData();
+            dump($data);
+            $zajecia->setName($data['name']);
+            $zajecia->setDateStart($data['date_start']);
+            $zajecia->setDateEnd($data['date_end']);
+            $zajecia->setRoom($data['room']);
+            $zajecia->setTrainer($trener);
+            //$classes->setIdTrener($data['idTrener']);
+            $entityManager->persist($zajecia);
+            $entityManager->flush();
+            return $this->redirectToRoute('zajecia_index');
+        }
+
+        return $this->render('classes/index.html.twig', [
+            //'classes' => $classesRepository->findAll(),
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/new", name="zajecia_new", methods={"GET","POST"})
+     */
+    public function new(Request $request): Response
+    {
+        $em=$this->getDoctrine()->getManager();
+        $sale=$this->getDoctrine()->getRepository(Rooms::class)->findAll();
+        $zajecia = new Classes();
+        $id=$this->getUser()->getSurname();
+        //var_dump($id);
+        $trener=$em->getRepository(Trainers::class)->findOneBy(['surname' => $id]);
+
         $form = $this->createFormBuilder(null, array('attr' =>array('class'=> 'new_form')))
             ->add('nazwa')
             /*->add('data', DateTimeType::class,[
@@ -94,22 +144,15 @@ class ClassesController extends AbstractController
             ]) */
             ->add('zapisz', SubmitType::class, [
                 'attr'=>[
-                    'class'=>'btn btn-danger float-rignt',
+                    'class'=>'btn btn-danger float-left',
                     'id' => 'submit'
             ]])
             ->getForm();    
             
         // tu skonczyłem, zrobic formulaz dodajocy wydazenie, ogarnać wyświetlanie kaledarza
 
-     /*   if(!$request->isXmlHttpRequest()){
-            return new JsonResponse(array(
-                'status' =>'Error',
-                    'message' => 'Error'
-                ), 400
-            );
-        }*/
-        $data = json_decode($request->getContent(),true);
-       // $form->handleRequest($request);
+       $data = json_decode($request->getContent(),true);
+        $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -160,7 +203,7 @@ class ClassesController extends AbstractController
         }
 
         return $this->render('classes/edit.html.twig', [
-            'zajecium' => $zajecium,
+            //'zajecium' => $zajecium,
             'form' => $form->createView(),
         ]);
     }

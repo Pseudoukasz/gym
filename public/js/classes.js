@@ -28,6 +28,7 @@ $.ajax({
     $('#body').load("zajecia_new");
 });*/
 
+/*
 (function (window, $) {
     window.RepLogApp = function ($wrapper) {
         this.$wrapper = $wrapper;
@@ -99,9 +100,9 @@ $.ajax({
 
     });
 
-    /**
+    /!**
      * A "private" object
-     */
+     *!/
     var Helper = function ($wrapper) {
         this.$wrapper = $wrapper;
     };
@@ -109,3 +110,4 @@ $.ajax({
 
 
 })(window, jQuery);
+*/

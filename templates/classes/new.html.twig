@@ -41,6 +41,23 @@
                 scrollbar: true
             });
         });
+      /*  $(document).ready(function(){
+            $('#submit').click(function(){
+
+                var data1 = {request : $('#request').val()};
+                $.ajax({
+                    type: "POST",
+                    url: "{{ path('zajecia_new') }}",
+                    data: data1,
+                    success: function(dataBack) {
+                        console.log(dataBack);
+
+                    },
+                    contentType: "application/json",
+                    dataType: 'json'
+                });
+            });
+        });*/
     </script>
 {% endblock %}
 {#{% block title %}New Zajecia{% endblock %}#}
