@@ -157,13 +157,12 @@ class ClassesController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $data = $form->getData();
-            dump($data);
+            dump($data);die;
             $zajecia->setName($data['nazwa']);
             $zajecia->setDateStart($data['data']);
             $zajecia->setDateEnd($data['datazak']);
             $zajecia->setRoom($data['sala']);
             $zajecia->setTrainer($trener);
-            //$classes->setIdTrener($data['idTrener']);
             $entityManager->persist($zajecia);
             $entityManager->flush();
 
@@ -181,7 +180,7 @@ class ClassesController extends AbstractController
      */
     public function show(Classes $class): Response
     {
-        
+        dump($class);
         return $this->render('classes/show.html.twig', [
             'class' => $class,
         ]);
@@ -190,10 +189,10 @@ class ClassesController extends AbstractController
     /**
      * @Route("/{id}/edit", name="zajecia_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Classes $zajecium): Response
+    public function edit(Request $request, Classes $classes): Response
     {
         
-        $form = $this->createForm(ClassesType::class, $zajecium);
+        $form = $this->createForm(ClassesType::class, $classes);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

@@ -24,7 +24,6 @@
     {{ form_label(form.date_end, 'Data i godzina zakończenia') }}
 
 
-
     {{ form_widget(form.date_end) }}
     {{ form_errors(form.date_end) }}
 </div>
@@ -40,9 +39,8 @@
 </div>
 
 <div class="modal-footer">
-
-    <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
-    {{ form_row(form.submit, {'label': 'Zapisz'}) }}
+    <a class="btn btn-secondary" href="{{ path('zajecia_index') }}">Zamknij</a>
+    {{ form_row(form.submit, {'label': 'Aktualizuj'}) }}
 </div>
 {{ form_end(form) }}
 
