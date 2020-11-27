@@ -43,7 +43,7 @@ class RegisterController extends AbstractController
                 $data = $form->getData();
                 $user = new User();
                 $user->setEmail($data['email']);
-                $user->setName($data['imie']);
+                $user->setName($data['name']);
                 $user->setSurname($data['surname']);
                 $user->setPhoneNumber($data['phone_number']);
                 $user->setPassword(
