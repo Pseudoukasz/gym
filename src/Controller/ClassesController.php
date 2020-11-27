@@ -35,9 +35,10 @@ class ClassesController extends AbstractController
         $em=$this->getDoctrine()->getManager();
         $sale=$this->getDoctrine()->getRepository(Rooms::class)->findAll();
         $zajecia = new Classes();
-        $id=$this->getUser()->getSurname();
-        //var_dump($id);
-        $trener=$em->getRepository(Trainers::class)->findOneBy(['surname' => $id]);
+        if($this->getUser()){
+            $id=$this->getUser()->getSurname();
+            $trener=$em->getRepository(Trainers::class)->findOneBy(['surname' => $id]);
+        }
 
         $form = $this->createFormBuilder(null, array('attr' =>array('class'=> 'new_form')))
             ->add('name')

@@ -41,10 +41,12 @@
                             {% endif %}
                             <a class="btn btn-secondary"
                                href="{{ path('zajecia_index') }}"> Zamknij </a>
+                            {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_TRAINER') %}
+                                <a class="btn btn-primary"
+                                   href="{{ path('zajecia_edit', {'id': class.id}) }}">
+                                    Edytuj </a>
+                            {% endif %}
 
-                            <a class="btn btn-primary"
-                               href="{{ path('zajecia_edit', {'id': class.id}) }}">
-                                Edytuj </a>
                             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                                 <a class="btn btn-success"
                                    href="{{ path('sign_for_classes', {'id': class.id}) }}">
