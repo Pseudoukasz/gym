@@ -210,16 +210,16 @@ class ClassesController extends AbstractController
     /**
      * @Route("/{id}/sign", name="sign_for_classes", methods={"GET","POST"})
      */
-    public function signForClasses(Request $request, Classes $zajecium): Response
+    public function signForClasses(Request $request, Classes $classes): Response
     {
-        $idZajecia=$zajecium->getId();
+        $idZajecia=$classes->getId();
         $user=$this->getUser();
-        $zapis = new SignForClasses();
+        $sign = new SignForClasses();
         $entityManager = $this->getDoctrine()->getManager();
 
-        $zapis->setUser($user);
-        $zapis->setClasses($zajecium);
-        $entityManager->persist($zapis);
+        $sign->setUser($user);
+        $sign->setClasses($classes);
+        $entityManager->persist($sign);
         $entityManager->flush();
         //dump($idZajecia, $user, $request, $zajecium);die;
 

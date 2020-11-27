@@ -1,0 +1,13 @@
+<tr>
+    <td>{{ class.id }}</td>
+    <td>{{ class.classes.name }}</td>
+    <td>{{ class.classes.datestart|date('Y-m-d H:i:s')  }}</td>
+    <td>{{ class.classes.trainer.name }} {{ class.classes.trainer.surname }}</td>
+    <td>
+        &nbsp;<a href="#"
+                 class="js-delete-rep-log"
+                 data-url="{{ path('rep_log_delete', {id:class.id}) }}">
+            <span class="fa fa-trash"></span>
+        </a>
+    </td>
+</tr>

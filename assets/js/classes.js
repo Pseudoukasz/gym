@@ -1,4 +1,5 @@
-/*'use strict';*/
+/*
+'use strict';
 
 (function (window, $) {
     window.RepLogApp = function ($wrapper) {
@@ -82,9 +83,9 @@
 
     });
 
-    /**
+    /!**
      * A "private" object
-     */
+     *!/
     var Helper = function ($wrapper) {
         this.$wrapper = $wrapper;
     };
@@ -101,4 +102,4 @@
 
     });
 
-})(window, jQuery);
+})(window, jQuery);*/
