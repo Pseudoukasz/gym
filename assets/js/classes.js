@@ -1,6 +1,7 @@
-/*
 'use strict';
-
+//loads the jquery package from node_modules
+/*var $ = require('jquery');*/
+global.$ = global.jQuery = $;
 (function (window, $) {
     window.RepLogApp = function ($wrapper) {
         this.$wrapper = $wrapper;
@@ -26,13 +27,6 @@
     $.extend(window.RepLogApp.prototype,{
 
 
-
-
-        updateTotalWeightLifted: function () {
-            this.$wrapper.find('.js-total-weight').html(
-                this._calculateTotalWeight()
-            );
-        },
         handleRepLogDelete: function (e) {
             e.preventDefault();
             var $link = $(e.currentTarget);
@@ -50,7 +44,6 @@
                 success: function () {
                     $row.fadeOut('normal', function () {
                         $row.remove();
-                        self.updateTotalWeightLifted();
                     })
                 }
             })
@@ -83,9 +76,9 @@
 
     });
 
-    /!**
+    /**
      * A "private" object
-     *!/
+     */
     var Helper = function ($wrapper) {
         this.$wrapper = $wrapper;
     };
@@ -102,4 +95,5 @@
 
     });
 
-})(window, jQuery);*/
+})(window, jQuery);
+

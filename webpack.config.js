@@ -8,7 +8,7 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
 
 Encore
     // directory where compiled assets will be stored
-    .autoProvidejQuery()
+
     .setOutputPath('public/build/')
     // public path used by the web server to access the output path
     .setPublicPath('/build')
@@ -65,7 +65,11 @@ Encore
     //.enableIntegrityHashes(Encore.isProduction())
 
     // uncomment if you're having problems with a jQuery plugin
-    //.autoProvidejQuery()
+    .autoProvidejQuery({
+        $: 'jquery',
+        jQuery: 'jquery',
+        'window.jQuery': 'jquery',
+    })
 
     // uncomment if you use API Platform Admin (composer req api-admin)
     //.enableReactPreset()

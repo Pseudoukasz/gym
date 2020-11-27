@@ -31,15 +31,3 @@ input {
 	border: 1px solid blue;
 }
 
-.close {
-	position: absolute;
-	top: 0;
-	right: 10px;
-	font-size: 42px;
-	color: #333;
-	transform: rotate(45deg);
-	cursor: pointer;
-	&:hover {
-		color: #666;
-	}
-}
