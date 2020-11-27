@@ -10,8 +10,6 @@
                 Stwórz wydarzenie
             </button>
         </div>#}
-
-
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
              aria-labelledby="exampleModalLabel"
@@ -27,16 +25,10 @@
                         </button>
                     </div>
                     <div class="modal-body" id="body">
-                        {# {{ render(controller(
-                        'App\\Controller\\ClassesController::new'
-                    )) }} #}
                         <div class="form-group ">
-                            {# {{ (form(form)) }} #}
                             {{ include('classes/_form.html.twig') }}
                         </div>
 
-
-                        {# {{ include('classes/new.html.twig') }} #}
                     </div>
 
                 </div>
@@ -44,99 +36,8 @@
         </div>
 
         {% include 'classes/calendar.html.twig' %}
-        {# <div  id="calendar-holder" style="height: 50%"></div> #}
-    {#</div>#}
 
 
 {% endblock %}
 
-{# {% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.css">
-    <link rel="stylesheet"
-          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
-          crossorigin="anonymous">
-    <!-- dialog box -->
-#}{# <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> #}{#
-{% endblock %} #}
-
-{# {% block javascripts %}
-    {{ parent() }}
-    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@4.1.0/main.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.js"></script>
-    <!-- dialog box -->
-#}{# <script src="{{ asset('js/classes.js') }}"></script> #}{#
-#}{# <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> #}{#
-<script type="text/javascript">
-    document.addEventListener('DOMContentLoaded', () => {
-        var calendarEl = document.getElementById('calendar-holder');
-
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-            defaultView: 'dayGridWeek',
-            editable: false,
-            height: 750,
-            eventSources: [
-                {
-                    url: "{{ path('fc_load_events') }}",
-                    method: "POST",
-                    extraParams: {
-                        filters: JSON.stringify({})
-                    },
-                    failure: () => {
-                        // alert("There was an error while fetching FullCalendar!");
-                    },
-                },
-
-            ],
-            eventTimeFormat: { // like '14:30:00'
-                hour: '2-digit',
-                minute: '2-digit',
-                hour12: false
-            },
-            header: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'dayGridMonth,timeGridWeek,timeGridDay,dayGridWeek',
-            },
-            plugins: ['interaction', 'dayGrid', 'timeGrid'], // https://fullcalendar.io/docs/plugin-index
-            timeZone: 'UTC',
-        });
-        calendar.render();
-    });
-
-    function $(document) {
-
-    }
-
-    /*   $(document).ready(function (){
-           var $wrapper =$('.modal-body');
-
-           //RepLogApp.initialize($table);
-           var repLogApp = new RepLogApp($wrapper);
-       });*/
-    /* $(document).ready(function(){
-         $('#submit').click(function(){
-
-             var data1 = {request : $('#request').val()};
-             $.ajax({
-                 type: "POST",
-                 url: "{{ path('zajecia_index') }}",
-                data: data1,
-                success: function(dataBack) {
-                    console.log(dataBack);
-
-                },
-                contentType: "application/json",
-                dataType: 'json'
-            });
-        });
-    });*/
-</script>
-{% endblock %} #}
 

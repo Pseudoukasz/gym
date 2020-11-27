@@ -23,14 +23,14 @@ class RegisterController extends AbstractController
     {
         $form= $this->createFormBuilder()
             ->add('email')
-            ->add('imie')
-            ->add('nazwisko')
-            ->add('telefon')
+            ->add('name')
+            ->add('surname')
+            ->add('phone_number')
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'required' => true,
-                'first_options' => ['label' =>'Password'],
-                'second_options' => ['label' =>'Confirm Password']
+                'first_options' => ['label' =>'Hasło'],
+                'second_options' => ['label' =>'Powtórz hasło']
             ])
             ->add('register', SubmitType::class, [
                 'attr'=>[
@@ -44,8 +44,8 @@ class RegisterController extends AbstractController
                 $user = new User();
                 $user->setEmail($data['email']);
                 $user->setName($data['imie']);
-                $user->setSurname($data['nazwisko']);
-                $user->setPhoneNumber($data['telefon']);
+                $user->setSurname($data['surname']);
+                $user->setPhoneNumber($data['phone_number']);
                 $user->setPassword(
                     $passwordEncoder->encodePassword($user, $data['password'])
                 );
@@ -57,8 +57,7 @@ class RegisterController extends AbstractController
             }
 
         return $this->render('register/index.html.twig', [
-            'form'=>$form->createView(),
-            'controller_name' => 'register',
+            'form'=>$form->createView()
         ]);
     }
 }

@@ -408,16 +408,16 @@
         },
         {
             "name": "amphp/http-client",
-            "version": "v4.5.1",
+            "version": "v4.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/amphp/http-client.git",
-                "reference": "47926d6055dc18fce1b6e822e3ec244df0fe4111"
+                "reference": "5f34c35e194b0f7b7fe07a3097f794e24f49cb0f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/amphp/http-client/zipball/47926d6055dc18fce1b6e822e3ec244df0fe4111",
-                "reference": "47926d6055dc18fce1b6e822e3ec244df0fe4111",
+                "url": "https://api.github.com/repos/amphp/http-client/zipball/5f34c35e194b0f7b7fe07a3097f794e24f49cb0f",
+                "reference": "5f34c35e194b0f7b7fe07a3097f794e24f49cb0f",
                 "shasum": ""
             },
             "require": {
@@ -500,7 +500,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-10-25T18:00:01+00:00"
+            "time": "2020-11-22T20:45:00+00:00"
         },
         {
             "name": "amphp/parser",

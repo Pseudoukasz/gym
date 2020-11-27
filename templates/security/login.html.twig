@@ -6,7 +6,7 @@
     <div class="modal" id="myModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-body" id="body">
                     <form method="post">
                         {% if error %}
                             <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -18,7 +18,7 @@
                                name="email"
                                id="inputEmail" class="form-control" required
                                autofocus>
-                        <label for="inputPassword">Password</label>
+                        <label for="inputPassword">Hasło</label>
                         <input type="password" name="password"
                                id="inputPassword"
                                class="form-control" required>
@@ -26,12 +26,18 @@
                         <input type="hidden" name="_csrf_token"
                                value="{{ csrf_token('authenticate') }}"
                         >
-                        <button class="btn btn-lg btn-primary" type="submit">
-                            Sign in
-                        </button>
+                        <div style="margin-top: 3%;" class="modal-footer">
+                            <button class="btn btn-lg btn-primary"
+                                    type="submit">
+                                Zaloguj
+                            </button>
+                        </div>
                     </form>
+
+
                 </div>
             </div>
+
         </div>
     </div>
 {% endblock %}
