@@ -17,7 +17,7 @@
     </div>
     <h3>Wykaz sal</h3>
     <div class="rooms">
-        <div class="js-classes-table">
+        <div class="js-rooms-table">
             <table class="table table-striped">
                 <thead>
                 <tr>
@@ -56,7 +56,7 @@
     </div>
     <h3>Wykaz karnetów</h3>
     <div class="memberships">
-        <div class="js-classes-table">
+        <div class="js-memberships-type-table">
             <table class="table table-striped">
                 <thead>
                 <tr>
@@ -90,4 +90,23 @@
     </div>
 
 
+{% endblock %}
+{% block javascripts %}
+    {#{{ parent() }}#}
+
+    {{ encore_entry_script_tags('adminpanel') }}
+    {#<script src="{{asset('public/js/classes.js') }}"></script>#}
+    <script>
+        $(document).ready(function (){
+            var $wrapper2 =$('.js-rooms-table');
+            //RepLogApp.initialize($table);
+            var repLogApp2 = new RepLogApp($wrapper2);
+        });
+        $(document).ready(function (){
+            var $wrapper =$('.js-memberships-type-table');
+            //RepLogApp.initialize($table);
+            var repLogApp = new RepLogApp($wrapper);
+        });
+
+    </script>
 {% endblock %}

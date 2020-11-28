@@ -8,13 +8,10 @@ use App\Entity\User;
 use App\Entity\Trainers;
 use App\Form\MembershipType;
 use App\Form\RoomsType;
-use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Mapping\Id;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\ChoiceList\ChoiceList;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -143,5 +140,27 @@ class AdminController extends AbstractController
 
             ]
         );
+    }
+    /**
+     * @Route("/admin/{id}", name="membership_type_delete", methods={"DELETE"})
+     */
+    public function deleteMembershipType(MembershipsType $membershipsType): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($membershipsType);
+        $em->flush();
+        return new Response(null, 204);
+    }
+    /**
+     * @Route("/admin/r/{id}", name="room_delete", methods={"DELETE"})
+     */
+    public function deleteRoom(Rooms $rooms): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($rooms);
+        $em->flush();
+        return new Response(null, 204);
     }
 }
