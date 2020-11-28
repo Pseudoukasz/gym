@@ -36,10 +36,13 @@ class UserPanelController extends AbstractController
     public function index(): Response
     {
         $userClasses = $this->signForClassesRepository->findBy(['user' => $this->security->getUser()]);
-        dump($userClasses);
+
+        $userData=$this->security->getUser();
+        dump($userClasses, $userData);
         return $this->render('user_panel/index.html.twig', [
             'controller_name' => 'UserPanelController',
             'userClasses' => $userClasses,
+            'userData' => $userData,
         ]);
     }
 
