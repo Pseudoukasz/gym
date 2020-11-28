@@ -53,9 +53,16 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/classes">Zajęcia</a>
                 </li>
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                 <li class="nav-item">
                     <a class="nav-link" href="/user/panel">Mój panel</a>
                 </li>
+                {% endif %}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin">Admin panel</a>
+                    </li>
+                {% endif %}
             </ul>
         </div>
         <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">

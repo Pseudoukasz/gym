@@ -1,0 +1,13 @@
+<tr>
+    <td>{{ membership.id }}</td>
+    <td>{{ membership.name }}</td>
+    <td>{{ membership.duration }}</td>
+    <td>{{ membership.type }}</td>
+    <td>
+        &nbsp;<a href="#"
+                 class="js-delete-rep-log"
+                {#data-url="{{ path('rep_log_delete', {id:class.id}) }}"#}>
+            <span class="fa fa-trash"></span>
+        </a>
+    </td>
+</tr>

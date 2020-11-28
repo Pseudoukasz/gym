@@ -1,0 +1,12 @@
+<tr>
+    <td>{{ room.id }}</td>
+    <td>{{ room.name }}</td>
+    <td>{{ room.maxNumberOfUsers }}</td>
+    <td>
+        &nbsp;<a href="#"
+                 class="js-delete-rep-log"
+                 {#data-url="{{ path('rep_log_delete', {id:class.id}) }}"#}>
+            <span class="fa fa-trash"></span>
+        </a>
+    </td>
+</tr>

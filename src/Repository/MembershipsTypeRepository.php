@@ -20,7 +20,7 @@ class MembershipsTypeRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return MembershipsType[] Returns an array of MembershipsType objects
+    //  * @return MembershipType[] Returns an array of MembershipType objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class MembershipsTypeRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?MembershipsType
+    public function findOneBySomeField($value): ?MembershipType
     {
         return $this->createQueryBuilder('m')
             ->andWhere('m.exampleField = :val')

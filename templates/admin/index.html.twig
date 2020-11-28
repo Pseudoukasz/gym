@@ -1,9 +1,93 @@
-{% extends 'base.html.twig' %} {% block title %}Hello AdminController!{% endblock %} {% block body %}
-
-
+{% extends 'base.html.twig' %}
+{% block title %}Admin Panel{% endblock %}
+{% block body %}
+    {#TODO ogarnąć cały panel #}
+    {#TODO dodać usuwanie pod fa-trash tak jak w zajęciach #}
 <div>
     <h3>Nadaj uprawnienia</h3>
 
 </div>
 
-{{form(form)}} {% endblock %}
+{{form(form)}}
+    <h3>Tworzenie sali</h3>
+    {#TODO dodawanie sal opakować w model #}
+    <div class="room form">
+        {{ form(room_form) }}
+
+    </div>
+    <h3>Wykaz sal</h3>
+    <div class="rooms">
+        <div class="js-classes-table">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Lp.</th>
+                    <th>Nazwa</th>
+                    <th>pojemność</th>
+                    <th>Akcja</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for room in rooms %}
+                    {{ include('admin/_roomRow.html.twig') }}
+                {% else %}
+                    <tr>
+                        <td colspan="4">Get liftin'!</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td>&nbsp;</td>
+                    <th>Total</th>
+                    {#<th class="js-total-weight">{{ totalWeight }}</th>#}
+                    <td>&nbsp;</td>
+                </tr>
+                </tfoot>
+            </table>
+
+        </div>
+    </div>
+    <h3>Tworzenie karnetów</h3>
+    {#TODO dodawanie sal opakować w model #}
+    <div class="membership form">
+        {{ form(membership_form) }}
+
+    </div>
+    <h3>Wykaz karnetów</h3>
+    <div class="memberships">
+        <div class="js-classes-table">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Lp.</th>
+                    <th>Nazwa</th>
+                    <th>Czas trwania</th>
+                    <th>Typ</th>
+                    <th>Akcja</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for membership in memberships %}
+                    {{ include('admin/_membershipRow.html.twig') }}
+                {% else %}
+                    <tr>
+                        <td colspan="4">Get liftin'!</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td>&nbsp;</td>
+                    <th>Total</th>
+                    {#<th class="js-total-weight">{{ totalWeight }}</th>#}
+                    <td>&nbsp;</td>
+                </tr>
+                </tfoot>
+            </table>
+
+        </div>
+    </div>
+
+
+{% endblock %}

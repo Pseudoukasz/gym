@@ -6,7 +6,6 @@ use App\Entity\Classes;
 use App\Entity\SignForClasses;
 use App\Repository\ClassesRepository;
 use App\Repository\SignForClassesRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
