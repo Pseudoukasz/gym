@@ -2,7 +2,9 @@
     <td>{{ membership.id }}</td>
     <td>{{ membership.name }}</td>
     <td>{{ membership.duration }}</td>
-    <td>{{ membership.type }}</td>
+    <td>{{ membership.type }}
+        <a href="{{ path('membership_edit', {id:membership.id}) }}"> aa</a>
+    </td>
     <td>
         &nbsp;<a href="#"
                  class="js-delete-rep-log"
@@ -10,4 +12,20 @@
             <span class="fa fa-trash"></span>
         </a>
     </td>
+    <td>
+        {# to niżej wyzuca membership edit form #}
+        {#<a href="{{ path('membership_edit', {id:membership.id}) }}"#}
+        <a href="#"
+                 class="js-edit-rep-log"
+                 data-url="{{ path('membership_edit', {id:membership.id}) }}">
+            <span class="fa fa-pencil" data-toggle="modal" data-target="#myModal"></span>
+        {#<div id="myModal">
+            <span class="fa fa-pencil"></span>
+
+        </div>#}
+
+        </a>
+
+    </td>
 </tr>
+

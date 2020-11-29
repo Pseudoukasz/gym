@@ -1,0 +1,53 @@
+{#{% extends 'admin/index.html.twig' %}
+
+{% block body %}#}
+{#{% extends 'base.html.twig' %}
+{% block body %}
+    {{ form(edit_form) }}#}
+{#
+<div class="modal" id="myModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-body" id="body">
+#}
+
+                    {#{{ include('classes/_edit_form.html.twig', {'button_label': 'Update'}) }}#}
+                    {{ form(edit_form) }}
+              {#  </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>#}
+{#
+<div class="membership form">
+    {{ form(membership_form) }}
+
+</div>#}
+{#{% endblock %}#}
+{#
+{% block javascripts %}
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    {{ encore_entry_script_tags('adminpanel') }}
+    #}
+{# <script src="{{asset('public/js/classes.js') }}"></script> #}{#
+
+    <script>
+
+        /*$(document).on('click', '.fa-pencil', function () {
+            jQuery.noConflict();
+            pre
+            $("#myModal").modal('show');
+        });*/
+        $(document).on('click', '.fa-pencil', function () {
+            jQuery.noConflict();
+            $("#myModal").modal('show');
+        });
+    </script>
+{% endblock %}#}

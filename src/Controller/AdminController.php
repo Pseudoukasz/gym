@@ -2,14 +2,18 @@
 
 namespace App\Controller;
 
+use App\Entity\Classes;
 use App\Entity\MembershipsType;
 use App\Entity\Rooms;
 use App\Entity\User;
 use App\Entity\Trainers;
+use App\Form\ClassesType;
 use App\Form\MembershipType;
 use App\Form\RoomsType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -29,6 +33,9 @@ class AdminController extends AbstractController
         $membershipsTypes = $this->getDoctrine()->getRepository(MembershipsType::class)->findAll();
         $addRoomForm = $this->createForm(RoomsType::class);
         $addMembershipTypeForm = $this->createForm(MembershipType::class);
+        $editMembershipTypeForm = $this->createForm(MembershipType::class/*, $membershipsType*/);
+
+
         $form = $this->createFormBuilder()
             ->add(
                 'user',
@@ -114,6 +121,14 @@ class AdminController extends AbstractController
 
             return $this->redirectToRoute('admin');
         }
+        $editMembershipTypeForm->handleRequest($request);
+
+        if ($editMembershipTypeForm->isSubmitted() && $editMembershipTypeForm->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('admin');
+            // return new Response(null, 204);
+        }
 
         //dump($users);die;
         return $this->render(
@@ -126,6 +141,7 @@ class AdminController extends AbstractController
                 'rooms' => $rooms,
                 'membership_form' => $addMembershipTypeForm->createView(),
                 'memberships' => $membershipsTypes,
+                //'edit_form' => $editMembershipTypeForm->createView(),
             ]
         );
     }
@@ -142,7 +158,7 @@ class AdminController extends AbstractController
         );
     }
     /**
-     * @Route("/admin/{id}", name="membership_type_delete", methods={"DELETE"})
+     * @Route("/admin/m/{id}", name="membership_type_delete", methods={"DELETE"})
      */
     public function deleteMembershipType(MembershipsType $membershipsType): Response
     {
@@ -161,6 +177,35 @@ class AdminController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->remove($rooms);
         $em->flush();
-        return new Response(null, 204);
+        return new Response($rooms, 204);
+    }
+    /**
+     * @Route("/admin/m/{id}/edit", name="membership_edit", methods={"GET","POST"})
+     */
+    public function editMembershipType(Request $request, MembershipsType $membershipsType): Response
+    {
+        $editMembershipTypeForm = $this->createForm(MembershipType::class, $membershipsType);
+
+        $editMembershipTypeForm->handleRequest($request);
+        /*if ($data === null) {
+            throw new BadRequestHttpException('Invalid JSON');
+        }*/
+        /*if ($request->isXMLHttpRequest()) {
+            return new JsonResponse(array('data' => 'this is a json response'));
+        }*/
+        if ($editMembershipTypeForm->isSubmitted() && $editMembershipTypeForm->isValid()) {
+            /*$data = json_decode($request->getContent(), true);
+            dump($data);die;*/
+            $this->getDoctrine()->getManager()->flush();
+
+            //return $this->redirectToRoute('zajecia_index');
+            return new Response(null, 204);
+        }
+
+        return $this->render('admin/_edit_membership.html.twig', [
+            /*'data' => $membershipsType,*/
+            'edit_form' => $editMembershipTypeForm->createView(),
+        ]);
+
     }
 }

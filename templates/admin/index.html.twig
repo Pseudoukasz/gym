@@ -1,16 +1,15 @@
 {% extends 'base.html.twig' %}
 {% block title %}Admin Panel{% endblock %}
 {% block body %}
-    {#TODO ogarnąć cały panel #}
-    {#TODO dodać usuwanie pod fa-trash tak jak w zajęciach #}
-<div>
-    <h3>Nadaj uprawnienia</h3>
+    {# TODO ogarnąć cały panel #}
+    <div>
+        <h3>Nadaj uprawnienia</h3>
 
-</div>
+    </div>
 
-{{form(form)}}
+    {{ form(form) }}
     <h3>Tworzenie sali</h3>
-    {#TODO dodawanie sal opakować w model #}
+    {# TODO dodawanie sal opakować w model #}
     <div class="room form">
         {{ form(room_form) }}
 
@@ -24,7 +23,7 @@
                     <th>Lp.</th>
                     <th>Nazwa</th>
                     <th>pojemność</th>
-                    <th>Akcja</th>
+                    <th colspan="2">Akcja</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -40,7 +39,7 @@
                 <tr>
                     <td>&nbsp;</td>
                     <th>Total</th>
-                    {#<th class="js-total-weight">{{ totalWeight }}</th>#}
+                    {# <th class="js-total-weight">{{ totalWeight }}</th> #}
                     <td>&nbsp;</td>
                 </tr>
                 </tfoot>
@@ -49,7 +48,7 @@
         </div>
     </div>
     <h3>Tworzenie karnetów</h3>
-    {#TODO dodawanie sal opakować w model #}
+    {# TODO dodawanie sal opakować w model #}
     <div class="membership form">
         {{ form(membership_form) }}
 
@@ -64,7 +63,7 @@
                     <th>Nazwa</th>
                     <th>Czas trwania</th>
                     <th>Typ</th>
-                    <th>Akcja</th>
+                    <th colspan="2">Akcja</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -80,7 +79,7 @@
                 <tr>
                     <td>&nbsp;</td>
                     <th>Total</th>
-                    {#<th class="js-total-weight">{{ totalWeight }}</th>#}
+                    {# <th class="js-total-weight">{{ totalWeight }}</th> #}
                     <td>&nbsp;</td>
                 </tr>
                 </tfoot>
@@ -88,22 +87,33 @@
 
         </div>
     </div>
+    <div class="edit"></div>
+    {{ include('admin/_edit_base.html.twig') }}
 
 
 {% endblock %}
 {% block javascripts %}
-    {#{{ parent() }}#}
-
+     {{ parent() }}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
     {{ encore_entry_script_tags('adminpanel') }}
-    {#<script src="{{asset('public/js/classes.js') }}"></script>#}
+    {# <script src="{{asset('public/js/classes.js') }}"></script> #}
     <script>
-        $(document).ready(function (){
-            var $wrapper2 =$('.js-rooms-table');
+        $(document).on('click', '.fa-pencil', function () {
+            jQuery.noConflict();
+            console.log('hallo');
+            $('#myModal').trigger('focus')
+           // $("#myModal").modal('show');
+        });
+        $(document).ready(function () {
+            var $wrapper2 = $('.js-rooms-table');
             //RepLogApp.initialize($table);
             var repLogApp2 = new RepLogApp($wrapper2);
         });
-        $(document).ready(function (){
-            var $wrapper =$('.js-memberships-type-table');
+        $(document).ready(function () {
+            var $wrapper = $('.js-memberships-type-table');
             //RepLogApp.initialize($table);
             var repLogApp = new RepLogApp($wrapper);
         });
