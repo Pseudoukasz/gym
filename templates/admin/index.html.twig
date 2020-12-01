@@ -1,99 +1,100 @@
 {% extends 'base.html.twig' %}
 {% block title %}Admin Panel{% endblock %}
 {% block body %}
-    {# TODO ogarnąć cały panel #}
-    <div>
-        <h3>Nadaj uprawnienia</h3>
-
-    </div>
-
-    {{ form(form) }}
-    <h3>Tworzenie sali</h3>
-    {# TODO dodawanie sal opakować w model #}
-    <div class="room form">
-        {{ form(room_form) }}
-
-    </div>
-    <h3>Wykaz sal</h3>
-    <div class="rooms">
-        <div class="js-rooms-table">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Lp.</th>
-                    <th>Nazwa</th>
-                    <th>pojemność</th>
-                    <th colspan="2">Akcja</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for room in rooms %}
-                    {{ include('admin/_roomRow.html.twig') }}
-                {% else %}
-                    <tr>
-                        <td colspan="4">Get liftin'!</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-                <tfoot>
-                <tr>
-                    <td>&nbsp;</td>
-                    <th>Total</th>
-                    {# <th class="js-total-weight">{{ totalWeight }}</th> #}
-                    <td>&nbsp;</td>
-                </tr>
-                </tfoot>
-            </table>
+    <div class="bg">
+        {# TODO ogarnąć cały panel #}
+        <div>
+            <h3>Nadaj uprawnienia</h3>
 
         </div>
-    </div>
-    <h3>Tworzenie karnetów</h3>
-    {# TODO dodawanie sal opakować w model #}
-    <div class="membership form">
-        {{ form(membership_form) }}
 
-    </div>
-    <h3>Wykaz karnetów</h3>
-    <div class="memberships">
-        <div class="js-memberships-type-table">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Lp.</th>
-                    <th>Nazwa</th>
-                    <th>Czas trwania</th>
-                    <th>Typ</th>
-                    <th colspan="2">Akcja</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for membership in memberships %}
-                    {{ include('admin/_membershipRow.html.twig') }}
-                {% else %}
-                    <tr>
-                        <td colspan="4">Get liftin'!</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-                <tfoot>
-                <tr>
-                    <td>&nbsp;</td>
-                    <th>Total</th>
-                    {# <th class="js-total-weight">{{ totalWeight }}</th> #}
-                    <td>&nbsp;</td>
-                </tr>
-                </tfoot>
-            </table>
+        {{ form(form) }}
+        <h3>Tworzenie sali</h3>
+        {# TODO dodawanie sal opakować w model #}
+        <div class="room form">
+            {{ form(room_form) }}
 
         </div>
+        <h3>Wykaz sal</h3>
+        <div class="rooms">
+            <div class="js-rooms-table">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Lp.</th>
+                        <th>Nazwa</th>
+                        <th>pojemność</th>
+                        <th colspan="2">Akcja</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for room in rooms %}
+                        {{ include('admin/_roomRow.html.twig') }}
+                    {% else %}
+                        <tr>
+                            <td colspan="4">Get liftin'!</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <th>Total</th>
+                        {# <th class="js-total-weight">{{ totalWeight }}</th> #}
+                        <td>&nbsp;</td>
+                    </tr>
+                    </tfoot>
+                </table>
+
+            </div>
+        </div>
+        <h3>Tworzenie karnetów</h3>
+        {# TODO dodawanie sal opakować w model #}
+        <div class="membership form">
+            {{ form(membership_form) }}
+
+        </div>
+        <h3>Wykaz karnetów</h3>
+        <div class="memberships">
+            <div class="js-memberships-type-table">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Lp.</th>
+                        <th>Nazwa</th>
+                        <th>Czas trwania</th>
+                        <th>Typ</th>
+                        <th colspan="2">Akcja</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for membership in memberships %}
+                        {{ include('admin/_membershipRow.html.twig') }}
+                    {% else %}
+                        <tr>
+                            <td colspan="4">Get liftin'!</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <th>Total</th>
+                        {# <th class="js-total-weight">{{ totalWeight }}</th> #}
+                        <td>&nbsp;</td>
+                    </tr>
+                    </tfoot>
+                </table>
+
+            </div>
+        </div>
+        <div class="edit"></div>
+        {{ include('admin/_edit_base.html.twig') }}
+
     </div>
-    <div class="edit"></div>
-    {{ include('admin/_edit_base.html.twig') }}
-
-
 {% endblock %}
 {% block javascripts %}
-     {{ parent() }}
+    {{ parent() }}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
@@ -105,7 +106,7 @@
             jQuery.noConflict();
             console.log('hallo');
             $('#myModal').trigger('focus')
-           // $("#myModal").modal('show');
+            // $("#myModal").modal('show');
         });
         $(document).ready(function () {
             var $wrapper2 = $('.js-rooms-table');
