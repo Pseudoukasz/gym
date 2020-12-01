@@ -4,9 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Classes;
 use App\Entity\SignForClasses;
+use App\Entity\User;
+use App\Form\UserType;
 use App\Repository\ClassesRepository;
 use App\Repository\SignForClassesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -32,16 +35,26 @@ class UserPanelController extends AbstractController
     /**
      * @Route("/user/panel", name="user_panel")
      */
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        $userClasses = $this->signForClassesRepository->findBy(['user' => $this->security->getUser()]);
-
         $userData=$this->security->getUser();
+        $userClasses = $this->signForClassesRepository->findBy(['user' => $this->security->getUser()]);
+        $editForm = $this->createForm(UserType::class, $userData);
+
+
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('user_panel');
+        }
         dump($userClasses, $userData);
         return $this->render('user_panel/index.html.twig', [
             'controller_name' => 'UserPanelController',
             'userClasses' => $userClasses,
             'userData' => $userData,
+            'form' => $editForm->createView()
         ]);
     }
 

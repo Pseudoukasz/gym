@@ -43,6 +43,55 @@
             {{ userData.surname }}
             {{ userData.phoneNumber }}
         </div>
+
+        <div class="form_edit">
+            {{ form_start(form) }}
+            {# {{ form_widget(form) }} #}
+            <div class="form-group">
+                <div class="form-contorl">
+                    <div class="">
+                        {{ form_label(form.email,'Nazwa zajęć') }}
+                    </div>
+
+                </div>
+
+                {{ form_widget(form.email,{'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.email) }}
+
+            </div>
+            <div class="form-group">
+                <div class="form-contorl">
+                    {{ form_label(form.name, 'Data i godzina rozpoczęcia') }}
+                </div>
+                {{ form_widget(form.name) }}
+                {{ form_errors(form.name) }}
+            </div>
+            <div class="form-group">
+
+                {{ form_label(form.surname, 'Data i godzina zakończenia') }}
+
+
+                {{ form_widget(form.surname) }}
+                {{ form_errors(form.surname) }}
+            </div>
+            <div class="form-group">
+                <div class="form-contorl">
+                    {{ form_label(form.phone_number, 'Wybierz sale') }}
+                </div>
+                <div class="">
+                    {{ form_widget(form.phone_number, {'attr': {'class': 'custom-select my-1 mr-sm-2'}}) }}
+                </div>
+
+                {{ form_errors(form.phone_number) }}
+            </div>
+
+            <div class="modal-footer">
+                <a class="btn btn-secondary" href="{{ path('zajecia_index') }}">Zamknij</a>
+                {{ form_row(form.submit, {'label': 'Aktualizuj'}) }}
+            </div>
+            {{ form_end(form) }}
+
+        </div>
     </div>
 
 {% endblock %}
