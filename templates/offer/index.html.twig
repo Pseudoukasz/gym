@@ -5,28 +5,202 @@
 {% block body %}
 
 <style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-    <link href="{{ asset('css/images.css') }}" rel="stylesheet"/>
+    .example-wrapper {
+        margin: 1em auto;
+        max-width: 800px;
+        width: 95%;
+        font: 18px/1.5 sans-serif;
+    }
+
+    .example-wrapper code {
+        background: #F5F5F5;
+        padding: 2px 6px;
+    }
+
+    <
+    link href
+
+    =
+    "
+    {{ asset('css/images.css') }}
+    "
+    rel
+
+    =
+    "stylesheet"
+    /
+    >
 
 </style>
 
 <div>
     <h1>Oferta ✅</h1>
     <div class="offer">
-    
-    <img id="gymoffer1" src="{{ asset('images/gymoffer1.png') }}" alt="1"/>
-    <p>Wpełni wyposarzona siłownia </p>
+
+       {# <img id="gymoffer1" src="{{ asset('images/gymoffer1.png') }}" alt="1"/>#}
+        <p>Wpełni wyposarzona siłownia </p>
+    </div>
+
+    <div class="memberships">
+        <div class="js-memberships-type-table">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Lp.</th>
+                    <th>Nazwa</th>
+                    <th>Czas trwania</th>
+                    <th>Typ</th>
+                    <th>Akcja</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for membership in membership_types %}
+                    <tr>
+                        <td>{{ membership.id }}</td>
+                        <td>{{ membership.name }}</td>
+                        <td>{{ membership.duration }}</td>
+                        <td>{{ membership.type }}</td>
+
+                        <td>
+                            {# to niżej wyzuca membership edit form #}
+                             <a href="{{ path('buy_membership', {id:membership.id}) }}" class="btn btn-danger">
+                            {#<a href="#"
+                               class="js-edit-rep-log"
+                               data-url="{{ path('membership_edit', {id:membership.id}) }}">
+                                <span class="fa fa-pencil" data-toggle="modal"
+                                      data-target="#myModal"></span>#}
+                                {# <div id="myModal">
+            <span class="fa fa-pencil"></span>
+
+        </div> #}
+                             </a>
+                        </td>
+                    </tr>
+
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td>&nbsp;</td>
+                    <th> </th>
+                    <td>&nbsp;</td>
+                </tr>
+                </tfoot>
+            </table>
+
+        </div>
     </div>
 
 
 
-
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/home/lukas/Desktop/projekty/gym/src/Controller/OfferController.php'|file_link(0) }}">src/Controller/OfferController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/home/lukas/Desktop/projekty/gym/templates/offer/index.html.twig'|file_link(0) }}">templates/offer/index.html.twig</a></code></li>
-    </ul>
 </div>
+    <div id="smart-button-container">
+        <div style="text-align: center;">
+            <div style="margin-bottom: 1.25rem;">
+                <p></p>
+                <select id="item-options"><option value="1" price="1"> 90  PLN</option><option value="" price=""> -  PLN</option><option value="" price=""> -  PLN</option><option value="" price=""> -  PLN</option></select>
+                <select style="visibility: hidden" id="quantitySelect"></select>
+            </div>
+            <div id="paypal-button-container"></div>
+        </div>
+    </div>
+
+
+
+{% endblock %}
+{% block javascripts %}
+    <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=PLN" data-sdk-integration-source="button-factory"></script>
+    <script>
+        function initPayPalButton() {
+            var shipping = 0;
+            var itemOptions = document.querySelector("#smart-button-container #item-options");
+            var quantity = parseInt();
+            var quantitySelect = document.querySelector("#smart-button-container #quantitySelect");
+            if (!isNaN(quantity)) {
+                quantitySelect.style.visibility = "visible";
+            }
+            var orderDescription = '';
+            if(orderDescription === '') {
+                orderDescription = 'Item';
+            }
+            paypal.Buttons({
+                style: {
+                    shape: 'rect',
+                    color: 'blue',
+                    layout: 'horizontal',
+                    label: 'buynow',
+
+                },
+                createOrder: function(data, actions) {
+                    var selectedItemDescription = itemOptions.options[itemOptions.selectedIndex].value;
+                    var selectedItemPrice = parseFloat(itemOptions.options[itemOptions.selectedIndex].getAttribute("price"));
+                    var tax = (23 === 0) ? 0 : (selectedItemPrice * (parseFloat(23)/100));
+                    if(quantitySelect.options.length > 0) {
+                        quantity = parseInt(quantitySelect.options[quantitySelect.selectedIndex].value);
+                    } else {
+                        quantity = 1;
+                    }
+
+                    tax *= quantity;
+                    tax = Math.round(tax * 100) / 100;
+                    var priceTotal = quantity * selectedItemPrice + parseFloat(shipping) + tax;
+                    priceTotal = Math.round(priceTotal * 100) / 100;
+                    var itemTotalValue = Math.round((selectedItemPrice * quantity) * 100) / 100;
+
+                    return actions.order.create({
+                        purchase_units: [{
+                            description: orderDescription,
+                            amount: {
+                                currency_code: 'PLN',
+                                value: priceTotal,
+                                breakdown: {
+                                    item_total: {
+                                        currency_code: 'PLN',
+                                        value: itemTotalValue,
+                                    },
+                                    shipping: {
+                                        currency_code: 'PLN',
+                                        value: shipping,
+                                    },
+                                    tax_total: {
+                                        currency_code: 'PLN',
+                                        value: tax,
+                                    }
+                                }
+                            },
+                            items: [{
+                                name: selectedItemDescription,
+                                unit_amount: {
+                                    currency_code: 'PLN',
+                                    value: selectedItemPrice,
+                                },
+                                quantity: quantity
+                            }]
+                        }]
+                    });
+                },
+                onApprove: function(data, actions) {
+                   /* $.ajax({
+                        url: {#{{ path('buy_membership') }}#},
+                        method: 'POST',
+                        data:
+                        success: function (data) {
+                        },
+                        error: function (jqXHR) {
+                            $form.closest('.js-new-rep-log-form-wrapper')
+                                .html(jqXHR.responseText);
+                        }
+                    })*/
+                    return actions.order.capture().then(function(details) {
+                        alert('Transaction completed by ' + details.payer.name.given_name + '!');
+                    });
+                },
+                onError: function(err) {
+                    console.log(err);
+                },
+            }).render('#paypal-button-container');
+        }
+        initPayPalButton();
+    </script>
+
 {% endblock %}
