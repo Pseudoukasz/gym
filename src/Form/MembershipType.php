@@ -23,7 +23,7 @@ class MembershipType extends AbstractType
                 SubmitType::class,
                 [
                     'attr' => [
-                        'class' => 'btn btn-danger float-left',
+                        'class' => 'btn btn-success float-left',
                         'id' => 'submit',
                     ],
                 ]

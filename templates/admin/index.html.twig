@@ -1,93 +1,198 @@
 {% extends 'base.html.twig' %}
 {% block title %}Admin Panel{% endblock %}
 {% block body %}
+    <div style="margin: 3%">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <h3 class="text-center">Zarządzanie obiektami</h3><br>
+                    <div class="rooms">
+                        <div class="js-rooms-table">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Lp.</th>
+                                    <th>Nazwa</th>
+                                    <th>pojemność</th>
+                                    <th colspan="2">Akcja</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for room in rooms %}
+                                    {{ include('admin/_roomRow.html.twig') }}
+                                {% else %}
+                                    <tr>
+                                        <td colspan="4">Get liftin'!</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <th>Total</th>
+                                    {# <th class="js-total-weight">{{ totalWeight }}</th> #}
+                                    <td>&nbsp;</td>
+                                </tr>
+                                </tfoot>
+                            </table>
+
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button class="show-obj btn btn-danger">Dodaj obiekt
+                        </button>
+                    </div>
+                    <div class="modal" id="objModal" tabindex="-1"
+                         role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="modal-body" id="body">
+                                        <h3>Tworzenie sali</h3><br>
+                                        <div class="room form">
+                                        </div>
+                                        <div class="form_edit">
+                                            {{ form_start(room_form) }}
+                                            <div class="form-group">
+                                                <div class="form-contorl">
+                                                    <div class="">
+                                                        {{ form_label(room_form.name,'Nazwa sali') }}
+                                                    </div>
+                                                </div>
+
+                                                {{ form_widget(room_form.name,{'attr': {'class': 'form-control'}}) }}
+                                                {{ form_errors(room_form.name) }}
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="form-contorl">
+                                                    {{ form_label(room_form.maxNumberOfUsers, 'Maksymalna liczba uzytkowników') }}
+                                                </div>
+                                                {{ form_widget(room_form.maxNumberOfUsers, {'attr': {'class': 'form-control'}}) }}
+                                                {{ form_errors(room_form.maxNumberOfUsers) }}
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a class="btn btn-secondary"
+                                                   href="{{ path('admin') }}">Zamknij</a>
+                                                {{ form_row(room_form.submit, {'label': 'Utwórz'}) }}
+                                            </div>
+                                            {{ form_end(room_form) }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="col">
+                    <h3 class="text-center">Zarządzanie Karnetami</h3><br>
+                    <div class="memberships">
+                        <div class="js-memberships-type-table">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Lp.</th>
+                                    <th>Nazwa</th>
+                                    <th>Czas trwania</th>
+                                    <th>Typ</th>
+                                    <th colspan="2">Akcja</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for membership in memberships %}
+                                    {{ include('admin/_membershipRow.html.twig') }}
+                                {% else %}
+                                    <tr>
+                                        <td colspan="4">Get liftin'!</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <th>Total</th>
+                                    {# <th class="js-total-weight">{{ totalWeight }}</th> #}
+                                    <td>&nbsp;</td>
+                                </tr>
+                                </tfoot>
+                            </table>
+
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button class="show-memb btn btn-danger">Dodaj karnet
+                        </button>
+                    </div>
+                    <div class="modal" id="membModal" tabindex="-1"
+                         role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="modal-body" id="body">
+                                        <h3>Tworzenie karnetu</h3><br>
+                                        <div class="room form">
+                                        </div>
+                                        <div class="form_edit">
+                                            {{ form_start(membership_form) }}
+                                            <div class="form-group">
+                                                <div class="form-contorl">
+                                                    <div class="">
+                                                        {{ form_label(membership_form.name,'Nazwa karnetu') }}
+                                                    </div>
+                                                </div>
+
+                                                {{ form_widget(membership_form.name,{'attr': {'class': 'form-control'}}) }}
+                                                {{ form_errors(membership_form.name) }}
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="form-contorl">
+                                                    {{ form_label(membership_form.duration, 'Czas trwania') }}
+                                                </div>
+                                                {{ form_widget(membership_form.duration, {'attr': {'class': 'form-control'}}) }}
+                                                {{ form_errors(membership_form.duration) }}
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="form-contorl">
+                                                    {{ form_label(membership_form.type, 'Czas trwania') }}
+                                                </div>
+                                                {{ form_widget(membership_form.type, {'attr': {'class': 'form-control'}}) }}
+                                                {{ form_errors(membership_form.type) }}
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a class="btn btn-secondary"
+                                                   href="{{ path('admin') }}">Zamknij</a>
+                                                {{ form_row(membership_form.submit, {'label': 'Utwórz'}) }}
+                                            </div>
+                                            {{ form_end(membership_form) }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
     <div class="bg">
         {# TODO ogarnąć cały panel #}
         <div>
-            <h3>Nadaj uprawnienia</h3>
+            <h3></h3>
 
         </div>
 
         {{ form(form) }}
-        <h3>Tworzenie sali</h3>
-        {# TODO dodawanie sal opakować w model #}
-        <div class="room form">
-            {{ form(room_form) }}
 
-        </div>
-        <h3>Wykaz sal</h3>
-        <div class="rooms">
-            <div class="js-rooms-table">
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>Lp.</th>
-                        <th>Nazwa</th>
-                        <th>pojemność</th>
-                        <th colspan="2">Akcja</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for room in rooms %}
-                        {{ include('admin/_roomRow.html.twig') }}
-                    {% else %}
-                        <tr>
-                            <td colspan="4">Get liftin'!</td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                    <tfoot>
-                    <tr>
-                        <td>&nbsp;</td>
-                        <th>Total</th>
-                        {# <th class="js-total-weight">{{ totalWeight }}</th> #}
-                        <td>&nbsp;</td>
-                    </tr>
-                    </tfoot>
-                </table>
 
-            </div>
-        </div>
-        <h3>Tworzenie karnetów</h3>
-        {# TODO dodawanie sal opakować w model #}
-        <div class="membership form">
-            {{ form(membership_form) }}
-
-        </div>
-        <h3>Wykaz karnetów</h3>
-        <div class="memberships">
-            <div class="js-memberships-type-table">
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>Lp.</th>
-                        <th>Nazwa</th>
-                        <th>Czas trwania</th>
-                        <th>Typ</th>
-                        <th colspan="2">Akcja</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for membership in memberships %}
-                        {{ include('admin/_membershipRow.html.twig') }}
-                    {% else %}
-                        <tr>
-                            <td colspan="4">Get liftin'!</td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                    <tfoot>
-                    <tr>
-                        <td>&nbsp;</td>
-                        <th>Total</th>
-                        {# <th class="js-total-weight">{{ totalWeight }}</th> #}
-                        <td>&nbsp;</td>
-                    </tr>
-                    </tfoot>
-                </table>
-
-            </div>
-        </div>
         <div class="edit"></div>
         {{ include('admin/_edit_base.html.twig') }}
 
@@ -108,6 +213,7 @@
             $('#myModal').trigger('focus')
             // $("#myModal").modal('show');
         });
+
         $(document).ready(function () {
             var $wrapper2 = $('.js-rooms-table');
             //RepLogApp.initialize($table);
@@ -119,5 +225,13 @@
             var repLogApp = new RepLogApp($wrapper);
         });
 
+        $(document).on('click', '.show-memb', function () {
+            jQuery.noConflict();
+            $("#membModal").modal('show');
+        });
+        $(document).on('click', '.show-obj', function () {
+            jQuery.noConflict();
+            $("#objModal").modal('show');
+        });
     </script>
 {% endblock %}
