@@ -1,10 +1,11 @@
 <tr>
     <td>{{ membership.id }}</td>
     <td>{{ membership.name }}</td>
-    <td>{{ membership.duration }}</td>
+    <td>{{ membership.duration }} Dni</td>
     <td>{{ membership.type }}
         <a href="{{ path('membership_edit', {id:membership.id}) }}"> aa</a>
     </td>
+    <td>{{ membership.price }} PLN</td>
     <td>
         &nbsp;<a href="#"
                  class="js-delete-rep-log"

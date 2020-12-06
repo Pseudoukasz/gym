@@ -18,6 +18,7 @@ class MembershipType extends AbstractType
             ->add('name')
             ->add('duration')
             ->add('type')
+            ->add('price')
             ->add(
                 'submit',
                 SubmitType::class,
