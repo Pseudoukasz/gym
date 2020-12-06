@@ -4,106 +4,161 @@
 
 {% block body %}
     <div style="margin: 3%">
-        <div class="row">
-            <div class="js-classes-table">
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>Lp.</th>
-                        <th>Nazwa</th>
-                        <th>Data i godzina rozpoczęcia</th>
-                        <th>Trener prowadzący</th>
-                        <th>Akcja</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for class in userClasses %}
-                        {{ include('user_panel/_classRow.html.twig') }}
-                    {% else %}
-                        <tr>
-                            <td colspan="4">Get liftin'!</td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                    <tfoot>
-                    <tr>
-                        <td>&nbsp;</td>
-                        <th>Total</th>
-                        {#<th class="js-total-weight">{{ totalWeight }}</th>#}
-                        <td>&nbsp;</td>
-                    </tr>
-                    </tfoot>
-                </table>
+        <div class="container-fluid">
+            <div class="row">
 
-            </div>
+                <div class="col-lg-8 ">
+                    <h3 class="text-center">Twoje zajęcia grupowe</h3><br>
+                    <div class="js-classes-table">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                {# <th>Lp.</th> #}
+                                <th>Nazwa</th>
+                                <th>Data i godzina rozpoczęcia</th>
+                                <th>Data i godzina zakończenia</th>
+                                <th>Trener prowadzący</th>
+                                <th>Akcja</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for class in userClasses %}
+                                {{ include('user_panel/_classRow.html.twig') }}
+                            {% else %}
+                                <tr>
+                                    <td colspan="5">Nie masz żadnych
+                                        nadchodzących
+                                        zajęć
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                {# <th>Total</th> #}
+                                <td>&nbsp;</td>
+                            </tr>
+                            </tfoot>
+                        </table>
 
-        </div>
-        <div class="row">{#TODO to trzeba okakować #}
-            {{ userData.name }}
-            {{ userData.surname }}
-            {{ userData.phoneNumber }}
-        </div>
-
-        <div class="form_edit">
-            {{ form_start(form) }}
-            {# {{ form_widget(form) }} #}
-            <div class="form-group">
-                <div class="form-contorl">
-                    <div class="">
-                        {{ form_label(form.email,'Nazwa zajęć') }}
                     </div>
 
                 </div>
+                <div class="col-lg-4 ">
+                    <h3 class="text-center">Twoje dane</h3><br>
 
-                {{ form_widget(form.email,{'attr': {'class': 'form-control'}}) }}
-                {{ form_errors(form.email) }}
+                    <table class="table table-striped">
+                        <tbody>
+                        <tr>
+                            <td>Imię</td>
+                            <td>{{ userData.name }}</td>
+                        </tr>
+                        <tr>
+                            <td>Nazwisko</td>
+                            <td>{{ userData.surname }}</td>
+                        </tr>
+                        <tr>
+                            <td>Numer Telefonu</td>
+                            <td>{{ userData.phoneNumber }}</td>
+                        </tr>
+                        {#<tr>
+                            <td>Twój karnet</td>
+                            <td>{{ userData.phoneNumber }}</td>
+                        </tr>#}
+                        </tbody>
+                    </table><br>
+                    <div class="text-center">
+                        <button class="show btn btn-danger">Zmień dane</button>
+                    </div>
 
-            </div>
-            <div class="form-group">
-                <div class="form-contorl">
-                    {{ form_label(form.name, 'Data i godzina rozpoczęcia') }}
                 </div>
-                {{ form_widget(form.name) }}
-                {{ form_errors(form.name) }}
             </div>
-            <div class="form-group">
 
-                {{ form_label(form.surname, 'Data i godzina zakończenia') }}
+            <div class="modal" id="myModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div class="modal-body" id="body">
+
+                                <div class="form_edit">
+                                    {{ form_start(form) }}
+                                    {# {{ form_widget(form) }} #}
+                                    <div class="form-group">
+                                        <div class="form-contorl">
+                                            <div class="">
+                                                {{ form_label(form.email,'Email') }}
+                                            </div>
+
+                                        </div>
+
+                                        {{ form_widget(form.email,{'attr': {'class': 'form-control'}}) }}
+                                        {{ form_errors(form.email) }}
+
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-contorl">
+                                            {{ form_label(form.name, 'Imie') }}
+                                        </div>
+                                        {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+                                        {{ form_errors(form.name) }}
+                                    </div>
+                                    <div class="form-group">
+
+                                        {{ form_label(form.surname, 'Nazwisko') }}
 
 
-                {{ form_widget(form.surname) }}
-                {{ form_errors(form.surname) }}
-            </div>
-            <div class="form-group">
-                <div class="form-contorl">
-                    {{ form_label(form.phone_number, 'Wybierz sale') }}
+                                        {{ form_widget(form.surname,{'attr': {'class': 'form-control'}}) }}
+                                        {{ form_errors(form.surname) }}
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-contorl">
+                                            {{ form_label(form.phone_number, 'Numer telefonu') }}
+                                        </div>
+                                        <div class="">
+                                            {{ form_widget(form.phone_number,{'attr': {'class': 'form-control'}} ) }}
+                                        </div>
+
+                                        {{ form_errors(form.phone_number) }}
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <a class="btn btn-secondary"
+                                           href="{{ path('user_panel') }}">Zamknij</a>
+                                        {{ form_row(form.submit, {'label': 'Aktualizuj'}) }}
+                                    </div>
+                                    {{ form_end(form) }}
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
-                <div class="">
-                    {{ form_widget(form.phone_number, {'attr': {'class': 'custom-select my-1 mr-sm-2'}}) }}
-                </div>
-
-                {{ form_errors(form.phone_number) }}
             </div>
-
-            <div class="modal-footer">
-                <a class="btn btn-secondary" href="{{ path('zajecia_index') }}">Zamknij</a>
-                {{ form_row(form.submit, {'label': 'Aktualizuj'}) }}
-            </div>
-            {{ form_end(form) }}
-
         </div>
     </div>
 
+
 {% endblock %}
 {% block javascripts %}
-    {#{{ parent() }}#}
+    {# {{ parent() }} #}
 
     {{ encore_entry_script_tags('classes') }}
-    {#<script src="{{asset('public/js/classes.js') }}"></script>#}
+    {# <script src="{{asset('public/js/classes.js') }}"></script> #}
     <script>
 
-        $(document).ready(function (){
-            var $wrapper =$('.js-classes-table');
+        $(document).on('click', '.show', function () {
+            jQuery.noConflict();
+            $("#myModal").modal('show');
+        });
+
+        $(document).ready(function () {
+            var $wrapper = $('.js-classes-table');
 
             //RepLogApp.initialize($table);
             var repLogApp = new RepLogApp($wrapper);
