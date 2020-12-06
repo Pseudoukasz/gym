@@ -39,6 +39,11 @@ class MembershipsType
      */
     private $membership;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $price;
+
     public function __construct()
     {
         $this->membership = new ArrayCollection();
@@ -112,6 +117,18 @@ class MembershipsType
                 $membership->setMembershipsType(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPrice(): ?float
+    {
+        return $this->price;
+    }
+
+    public function setPrice(?float $price): self
+    {
+        $this->price = $price;
 
         return $this;
     }

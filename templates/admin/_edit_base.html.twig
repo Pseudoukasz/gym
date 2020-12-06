@@ -3,9 +3,42 @@
         <div class="modal-content">
             <div class="modal-header">
                 <div class="modal-body" id="body">
+                    <h3>Tworzenie karnetu</h3><br>
+                    <div class="room form">
+                    </div>
+                    <div class="form_edit">
+                        {{ form_start(membership_form) }}
+                        <div class="form-group">
+                            <div class="form-contorl">
+                                <div class="">
+                                    {{ form_label(membership_form.name,'Nazwa karnetu') }}
+                                </div>
+                            </div>
 
-                    {#{{ include('classes/_edit_form.html.twig', {'button_label': 'Update'}) }}#}
-                    {#{{ form(edit_form) }}#}
+                            {{ form_widget(membership_form.name,{'attr': {'class': 'form-control'}}) }}
+                            {{ form_errors(membership_form.name) }}
+                        </div>
+                        <div class="form-group">
+                            <div class="form-contorl">
+                                {{ form_label(membership_form.duration, 'Czas trwania') }}
+                            </div>
+                            {{ form_widget(membership_form.duration, {'attr': {'class': 'form-control'}}) }}
+                            {{ form_errors(membership_form.duration) }}
+                        </div>
+                        <div class="form-group">
+                            <div class="form-contorl">
+                                {{ form_label(membership_form.type, 'Czas trwania') }}
+                            </div>
+                            {{ form_widget(membership_form.type, {'attr': {'class': 'form-control'}}) }}
+                            {{ form_errors(membership_form.type) }}
+                        </div>
+                        <div class="modal-footer">
+                            <a class="btn btn-secondary"
+                               href="{{ path('admin') }}">Zamknij</a>
+                            {{ form_row(membership_form.submit, {'label': 'Utwórz'}) }}
+                        </div>
+                        {{ form_end(membership_form) }}
+                    </div>
                 </div>
             </div>
 
