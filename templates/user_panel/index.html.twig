@@ -65,10 +65,14 @@
                             <td>Numer Telefonu</td>
                             <td>{{ userData.phoneNumber }}</td>
                         </tr>
-                        {#<tr>
+                        <tr>
                             <td>Twój karnet</td>
-                            <td>{{ userData.phoneNumber }}</td>
-                        </tr>#}
+                            <td>{% if userData.membership == "null" %}
+                                {{ userData.membership }}
+                                {% else %} Brak aktywnego karnetu
+                                {% endif %}
+                            </td>
+                        </tr>
                         </tbody>
                     </table><br>
                     <div class="text-center">
@@ -83,7 +87,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <div class="modal-body" id="body">
-
+                                <h3>Modyfikuj dane</h3><br>
                                 <div class="form_edit">
                                     {{ form_start(form) }}
                                     {# {{ form_widget(form) }} #}
