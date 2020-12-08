@@ -187,15 +187,9 @@ class AdminController extends AbstractController
         $editMembershipTypeForm = $this->createForm(MembershipType::class, $membershipsType);
 
         $editMembershipTypeForm->handleRequest($request);
-        /*if ($data === null) {
-            throw new BadRequestHttpException('Invalid JSON');
-        }*/
-        /*if ($request->isXMLHttpRequest()) {
-            return new JsonResponse(array('data' => 'this is a json response'));
-        }*/
+
         if ($editMembershipTypeForm->isSubmitted() && $editMembershipTypeForm->isValid()) {
-            /*$data = json_decode($request->getContent(), true);
-            dump($data);die;*/
+
             $this->getDoctrine()->getManager()->flush();
 
             //return $this->redirectToRoute('zajecia_index');

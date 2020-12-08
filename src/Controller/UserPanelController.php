@@ -59,7 +59,7 @@ class UserPanelController extends AbstractController
             'controller_name' => 'UserPanelController',
             'userClasses' => $userClasses,
             'userData' => $userData,
-            'userMembership' => $userMembership,
+            'userMembership' => $userMembership ? $userMembership : null,
             'form' => $editForm->createView()
         ]);
     }
