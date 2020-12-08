@@ -1,5 +1,5 @@
 <tr>
-    {#<td>{{ class.id }}</td>#}
+    <td>{{ loop.index }}</td>
     <td>{{ class.classes.name }}</td>
     <td>{{ class.classes.datestart|date('Y-m-d H:i:s')  }}</td>
     <td>{{ class.classes.dateend|date('Y-m-d H:i:s')  }}</td>

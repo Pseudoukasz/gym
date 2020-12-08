@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Memberships;
+use App\Entity\User;
 use App\Entity\MembershipsType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -32,21 +34,32 @@ class OfferController extends AbstractController
     /**
      * @Route("/offer/{id}", name="buy_membership")
      */
-    public function buyMembership(Request $request, MembershipsType $membershipsType): void
+    public function buyMembership(Request $request, MembershipsType $membershipsType): Response
     {
+        if($request->isXmlHttpRequest()){
+            $ajax = $request;
+            dump($ajax->get('membershipsType'));
+            $entityManager = $this->getDoctrine()->getManager();
+            $user = $this->get('security.token_storage')->getToken()->getUser();
+             $meberships = new Memberships();
+             $meberships->setDateStart(new \DateTime());
+             $meberships->setDateEnd(new \DateTime());
+             $meberships->setMembershipsType($ajax->get('membershipsType'));
+             $meberships->setUserId($user->getId());
+            $entityManager->persist($meberships);
+            $entityManager->flush();
 
 
+             //$user = $this->getDoctrine()->getRepository(User::class)->findBy(['id'=> '']);
 
-        $response = $this->client->request(
-          'POST',
-            'https://sandbox.przelewy24.pl/api/v1/transaction/register',[
-            'body' =>['currency' => 'PLN',
-            'description'=>'test order',
-            'amount' => '100'],
+             //$this->getUser()->setMembership(1);
 
-        ]);
+            dump($ajax);
+
+        }
+
         dump($membershipsType);
 
-
+        return new Response(null, 204);
     }
 }

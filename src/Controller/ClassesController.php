@@ -104,10 +104,10 @@ class ClassesController extends AbstractController
     {
         $em=$this->getDoctrine()->getManager();
         $sale=$this->getDoctrine()->getRepository(Rooms::class)->findAll();
-        $zajecia = new Classes();
+        $classes = new Classes();
         $id=$this->getUser()->getSurname();
         //var_dump($id);
-        $trener=$em->getRepository(Trainers::class)->findOneBy(['surname' => $id]);
+        $trainer=$em->getRepository(Trainers::class)->findOneBy(['surname' => $id]);
 
         $form = $this->createFormBuilder(null, array('attr' =>array('class'=> 'new_form')))
             ->add('nazwa')
@@ -152,19 +152,18 @@ class ClassesController extends AbstractController
             
         // tu skonczyłem, zrobic formulaz dodajocy wydazenie, ogarnać wyświetlanie kaledarza
 
-       $data = json_decode($request->getContent(),true);
+      // $data = json_decode($request->getContent(),true);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $data = $form->getData();
-            dump($data);die;
-            $zajecia->setName($data['nazwa']);
-            $zajecia->setDateStart($data['data']);
-            $zajecia->setDateEnd($data['datazak']);
-            $zajecia->setRoom($data['sala']);
-            $zajecia->setTrainer($trener);
-            $entityManager->persist($zajecia);
+            $classes->setName($data['nazwa']);
+            $classes->setDateStart($data['data']);
+            $classes->setDateEnd($data['datazak']);
+            $classes->setRoom($data['sala']);
+            $classes->setTrainer($trainer);
+            $entityManager->persist($classes);
             $entityManager->flush();
 
            // return $this->redirectToRoute('zajecia_index');
