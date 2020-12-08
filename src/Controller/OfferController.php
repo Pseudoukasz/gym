@@ -49,11 +49,6 @@ class OfferController extends AbstractController
             $entityManager->persist($meberships);
             $entityManager->flush();
 
-
-             //$user = $this->getDoctrine()->getRepository(User::class)->findBy(['id'=> '']);
-
-             //$this->getUser()->setMembership(1);
-
             dump($ajax);
 
         }

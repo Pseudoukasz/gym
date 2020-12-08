@@ -67,8 +67,9 @@
                         </tr>
                         <tr>
                             <td>Twój karnet</td>
-                            <td>{% if userData.membership == "null" %}
-                                {{ userData.membership }}
+                            <td>{% if userMembership != "null" %}
+                                {{ userMembership.membershipsType.name }}
+                                    {{ userMembership.membershipsType.type }}
                                 {% else %} Brak aktywnego karnetu
                                 {% endif %}
                             </td>

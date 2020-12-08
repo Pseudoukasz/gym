@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Classes;
+use App\Entity\Memberships;
 use App\Entity\SignForClasses;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\ClassesRepository;
+use App\Repository\MembershipsRepository;
 use App\Repository\SignForClassesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,6 +21,7 @@ class UserPanelController extends AbstractController
 {
     private $classesRepository;
     private $signForClassesRepository;
+    private $membershipsRepository;
     private $router;
     private $security;
     private $user;
@@ -26,11 +29,13 @@ class UserPanelController extends AbstractController
     public function __construct(
         ClassesRepository $classesRepository,
         SignForClassesRepository $signForClassesRepository,
-        Security $security
+        Security $security,
+        MembershipsRepository $membershipsRepository
     ) {
         $this->classesRepository = $classesRepository;
         $this->signForClassesRepository = $signForClassesRepository;
         $this->security = $security;
+        $this->membershipsRepository = $membershipsRepository;
     }
     /**
      * @Route("/user/panel", name="user_panel")
@@ -40,7 +45,7 @@ class UserPanelController extends AbstractController
         $userData=$this->security->getUser();
         $userClasses = $this->signForClassesRepository->findBy(['user' => $this->security->getUser()]);
         $editForm = $this->createForm(UserType::class, $userData);
-
+        $userMembership =$this->membershipsRepository->findOneBy(['user_id' => $userData->getId()]);
 
         $editForm->handleRequest($request);
 
@@ -49,11 +54,12 @@ class UserPanelController extends AbstractController
 
             return $this->redirectToRoute('user_panel');
         }
-        dump($userClasses, $userData);
+        //dump($userClasses, $userData);
         return $this->render('user_panel/index.html.twig', [
             'controller_name' => 'UserPanelController',
             'userClasses' => $userClasses,
             'userData' => $userData,
+            'userMembership' => $userMembership,
             'form' => $editForm->createView()
         ]);
     }
