@@ -115,6 +115,7 @@ class AdminController extends AbstractController
             $membershipType->setName($dataMembershipForm['name']);
             $membershipType->setDuration($dataMembershipForm['duration']);
             $membershipType->setType($dataMembershipForm['type']);
+            $membershipType->setPrice($dataMembershipForm['price']);
             $em = $this->getDoctrine()->getManager();
             $em->persist($membershipType);
             $em->flush();
