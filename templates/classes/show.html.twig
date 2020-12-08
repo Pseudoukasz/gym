@@ -12,26 +12,26 @@
                         <h2> Informacje o zajeciach</h2>
                         <table class="table">
                             <tbody>
-                            <tr>
-                                <th>Nazwa zajęć</th>
-                                <td>{{ class.name}}</td>
-                            </tr>
-                            <tr>
-                                <th>Prowadzący </th>
-                                <td>{{ class.trainer.name}} {{ class.trainer.surname }}</td>
-                            </tr>
-                            <tr>
-                                <th>Nazwa sali</th>
-                                <td>{{ class.room.name}}</td>
-                            </tr>
-                            <tr>
-                                <th>Data rozpoczecia</th>
-                                <td>{{ class.dateStart ? class.dateStart|date('Y-m-d H:i:s') : '' }}</td>
-                            </tr>
-                            <tr>
-                                <th>Data zakonczenia</th>
-                                <td>{{ class.dateend ? class.dateend|date('Y-m-d H:i:s') : '' }}</td>
-                            </tr>
+                                <tr>
+                                    <th>Nazwa zajęć</th>
+                                    <td>{{ class.name}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Prowadzący </th>
+                                    <td>{{ class.trainer.name}} {{ class.trainer.surname }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Nazwa sali</th>
+                                    <td>{{ class.room.name}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Data rozpoczecia</th>
+                                    <td>{{ class.dateStart ? class.dateStart|date('Y-m-d H:i:s') : '' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Data zakonczenia</th>
+                                    <td>{{ class.dateend ? class.dateend|date('Y-m-d H:i:s') : '' }}</td>
+                                </tr>
 
                             </tbody>
                         </table>
@@ -39,12 +39,12 @@
                             {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_TRAINER') %}
                                 {{ include('classes/_delete_form.html.twig') }}
                             {% endif %}
-                            
+
                             {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_TRAINER') %}
                                 <a class="btn btn-primary"
                                    href="{{ path('zajecia_edit', {'id': class.id}) }}">
                                     Edytuj </a>
-                                    
+
                             {% endif %}
 
                             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
@@ -52,10 +52,10 @@
                                    href="{{ path('sign_for_classes', {'id': class.id}) }}">
                                     Zapisz
                                     się </a>
-                                    <a class="btn btn-secondary"
-                               href="{{ path('zajecia_index') }}"> Zamknij </a>
-                            {% endif %}
 
+                            {% endif %}
+                            <a class="btn btn-secondary"
+                               href="{{ path('zajecia_index') }}"> Zamknij </a>
 
                         </div>
                     </div>
@@ -66,19 +66,19 @@
     </div>
 {% endblock %}
 {% block javascripts %}
-{{ parent() }}
+    {{ parent() }}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
+    crossorigin="anonymous"></script>
     <script type="text/javascript">
 
         $(document).ready(function () {
             jQuery.noConflict();
             $('#myModal').modal('show');
         });
-       /* $('#myModal').on('shown.bs.modal', function () {
-            $('#myInput').trigger('focus')
-        })*/
+        /* $('#myModal').on('shown.bs.modal', function () {
+         $('#myInput').trigger('focus')
+         })*/
     </script>
 {% endblock %}
