@@ -11,8 +11,7 @@
                         {% if error %}
                             <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                         {% endif %}
-
-
+                        <h4> Proszę się zalogować</h4><br>
                         <label for="inputEmail">Email</label>
                         <input type="email" value="{{ last_username }}"
                                name="email"
