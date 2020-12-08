@@ -54,7 +54,7 @@
                     <tbody>
                     {% for membership in membership_types %}
                         <tr>
-                            <td>{{ membership.id }}</td>
+                            <td>{{ loop.index }}</td>
                             <td>{{ membership.name }}</td>
                             <td>{{ membership.duration }} Dni</td>
                             <td>{{ membership.type }}</td>
