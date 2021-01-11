@@ -80,6 +80,7 @@
 
 
     </div>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
     <div id="smart-button-container">
         <div style="text-align: center;">
             <div style="margin-bottom: 1.25rem;">
@@ -95,6 +96,7 @@
             <div id="paypal-button-container"></div>
         </div>
     </div>
+    {% endif %}
 
 </div>
 
