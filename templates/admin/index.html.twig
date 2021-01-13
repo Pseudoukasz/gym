@@ -196,12 +196,28 @@
 
     <div class="bg">
         {# TODO ogarnąć cały panel #}
-        <div>
-            <h3></h3>
+        <div class="col-4">
+            <h3> Nadawanie uprawnień</h3>
 
         </div>
-
-        {{ form(form) }}
+        <div class="form-group col-4">
+            <div class="form-contorl">
+                {{ form_label(form.user, 'Wybierz użytkownika') }}
+            </div>
+            {{ form_widget(form.user, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.user) }}
+        </div>
+        <div class="form-group col-4">
+            <div class="form-contorl">
+                {{ form_label(form.rola, 'Wybierz uprawnienia') }}
+            </div>
+            {{ form_widget(form.rola, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.rola) }}
+        </div>
+        <div class="form-group col-4">
+            {{ form_row(form.zapisz) }}
+        </div>
+        {#{{ form(form) }}#}
 
 
         <div class="edit"></div>

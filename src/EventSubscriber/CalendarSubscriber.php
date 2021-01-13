@@ -92,8 +92,7 @@ class CalendarSubscriber implements EventSubscriberInterface
             //var_dump($id);
             if($this->security->isGranted('IS_AUTHENTICATED_FULLY')) {
 
-                if ($this->signForClassesRepository->findOneBy(['classes' => $zajecia->getId(), 'user' => $this->security->getUser()])
-                    || $zajecia->getRoom()->getMaxNumberOfUsers() <= count($this->signForClassesRepository->findBy(['classes' => $zajecia->getId()]))) {
+                if ($zajecia->getRoom()->getMaxNumberOfUsers() <= count($this->signForClassesRepository->findBy(['classes' => $zajecia->getId()]))) {
 
                     $bookingEvent->setOptions(
                         [
@@ -101,7 +100,14 @@ class CalendarSubscriber implements EventSubscriberInterface
                             'borderColor' => 'red',
                         ]
                     );
-                } else {
+                } else if ($this->signForClassesRepository->findOneBy(['classes' => $zajecia->getId(), 'user' => $this->security->getUser()])) {
+                    $bookingEvent->setOptions(
+                        [
+                            'backgroundColor' => 'blue',
+                            'borderColor' => 'blue',
+                        ]
+                    );
+                }else {
                     $bookingEvent->setOptions(
                         [
                             'backgroundColor' => 'green',
