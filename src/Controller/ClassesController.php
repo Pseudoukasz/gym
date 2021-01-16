@@ -180,9 +180,13 @@ class ClassesController extends AbstractController
      */
     public function show(Classes $class): Response
     {
-        dump($class);
+        $em=$this->getDoctrine()->getManager();
+        $id=$this->getUser()->getSurname();
+        $trainer=$em->getRepository(Trainers::class)->findOneBy(['surname' => $id]);
+
         return $this->render('classes/show.html.twig', [
             'class' => $class,
+            'trainer' => $trainer
         ]);
     }
 

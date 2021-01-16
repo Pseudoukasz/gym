@@ -48,11 +48,12 @@
                             {% endif %}
 
                             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                {% if trainer == null  %}
                                 <a class="btn btn-success"
                                    href="{{ path('sign_for_classes', {'id': class.id}) }}">
                                     Zapisz
                                     się </a>
-
+                                {% endif %}
                             {% endif %}
                             <a class="btn btn-secondary"
                                href="{{ path('zajecia_index') }}"> Zamknij </a>

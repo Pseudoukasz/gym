@@ -1,14 +1,31 @@
-<tr>
-    <td>{{ loop.index }}</td>
-    <td>{{ class.classes.name }}</td>
-    <td>{{ class.classes.datestart|date('Y-m-d H:i:s')  }}</td>
-    <td>{{ class.classes.dateend|date('Y-m-d H:i:s')  }}</td>
-    <td>{{ class.classes.trainer.name }} {{ class.classes.trainer.surname }}</td>
-    <td>
-        &nbsp;<a href="#"
-                 class="js-delete-rep-log"
-                 data-url="{{ path('rep_log_delete', {id:class.id}) }}">
-            <span class="fa fa-trash"></span>
-        </a>
-    </td>
-</tr>
+{% if trainer != null %}
+    <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ class.name }}</td>
+        <td>{{ class.datestart|date('Y-m-d H:i:s')  }}</td>
+        <td>{{ class.dateend|date('Y-m-d H:i:s')  }}</td>
+        <td>{{ class.trainer.name }} {{ class.trainer.surname }}</td>
+        <td>
+            &nbsp;{#<a href="#"
+                     class="js-delete-rep-log"
+                     data-url="{{ path('rep_log_delete', {id:class.id}) }}">
+                <span class="fa fa-trash"></span>
+            </a>#}
+        </td>
+    </tr>
+{% else %}
+    <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ class.classes.name }}</td>
+        <td>{{ class.classes.datestart|date('Y-m-d H:i:s')  }}</td>
+        <td>{{ class.classes.dateend|date('Y-m-d H:i:s')  }}</td>
+        <td>{{ class.classes.trainer.name }} {{ class.classes.trainer.surname }}</td>
+        <td>
+            &nbsp;<a href="#"
+                     class="js-delete-rep-log"
+                     data-url="{{ path('rep_log_delete', {id:class.id}) }}">
+                <span class="fa fa-trash"></span>
+            </a>
+        </td>
+    </tr>
+{% endif %}
