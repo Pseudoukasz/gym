@@ -191,7 +191,18 @@
 
         </div>
         <div class="stats">
-
+            <h2 style=" left: 50%; margin: 3% 50% 3% 50%"> Statystyki</h2><br>
+            <div class="row">
+                <div class="col-sm">
+                <h3>Aktualna liczba klientów: {{ usersCount }}</h3>
+                </div>
+                <div class="col-sm">
+                    <h3>Procentowe wypełnienie sal podczas zajęć: 30%</h3>
+                </div>
+                <div class="col-sm">
+                    <h3>liczba zakupionych karnetów: 6 </h3>
+                </div>
+            </div>
 
         </div>
     </div>
@@ -242,6 +253,7 @@
             <div class="edit"></div>
         </div>
     </div>
+
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
@@ -284,5 +296,11 @@
             jQuery.noConflict();
             $("#objModal").modal('show');
         });
+        $("#delete_user_submit").click(function(){
+            alert("Użytkowanik usunięty");
+        });
+        $("#form_zapisz").click(function (){
+            alert("Uprawnienia zapisane");
+        })
     </script>
 {% endblock %}

@@ -149,6 +149,8 @@ class AdminController extends AbstractController
                 'form' => $form->createView(),
                 'room_form' => $addRoomForm->createView(),
                 'rooms' => $rooms,
+                'usersCount' => count($users),
+
                 'membership_form' => $addMembershipTypeForm->createView(),
                 'memberships' => $membershipsTypes,
                 'deleteUser_form' => $deleteUserTypeForm->createView()
