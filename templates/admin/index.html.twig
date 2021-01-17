@@ -106,14 +106,14 @@
                                     {{ include('admin/_membershipRow.html.twig') }}
                                 {% else %}
                                     <tr>
-                                        <td colspan="7">Brak karnetów </td>
+                                        <td colspan="7">Brak karnetów</td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
                                 <tfoot>
                                 <tr>
                                     <td>&nbsp;</td>
-                                    <th> </th>
+                                    <th></th>
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
@@ -190,39 +190,57 @@
             </div>
 
         </div>
+        <div class="stats">
+
+
+        </div>
     </div>
 
 
 
-    <div class="bg">
+    <div class="row" style="margin: 3%">
         {# TODO ogarnąć cały panel #}
-        <div class="col-4">
+        <div class="col">
             <h3> Nadawanie uprawnień</h3>
 
-        </div>
-        <div class="form-group col-4">
-            <div class="form-contorl">
-                {{ form_label(form.user, 'Wybierz użytkownika') }}
+            <div class="form-group">
+                <div class="form-contorl">
+                    {{ form_label(form.user, 'Wybierz użytkownika') }}
+                </div>
+                {{ form_widget(form.user, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.user) }}
             </div>
-            {{ form_widget(form.user, {'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(form.user) }}
-        </div>
-        <div class="form-group col-4">
-            <div class="form-contorl">
-                {{ form_label(form.rola, 'Wybierz uprawnienia') }}
+            <div class="form-group">
+                <div class="form-contorl">
+                    {{ form_label(form.rola, 'Wybierz uprawnienia') }}
+                </div>
+                {{ form_widget(form.rola, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.rola) }}
             </div>
-            {{ form_widget(form.rola, {'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(form.rola) }}
+            <div class="form-group">
+                {{ form_row(form.zapisz) }}
+            </div>
+            {# {{ form(form) }} #}
+            <div class="edit"></div>
         </div>
-        <div class="form-group col-4">
-            {{ form_row(form.zapisz) }}
+        {# <div class="edit"></div> #}
+        {# {{ include('admin/_edit_base.html.twig') }} #}
+
+
+        <div class="col">
+            <h3> Usuń użytkownika z systemu</h3>
+            <div class="form-group">
+                <div class="form-contorl">
+                    {{ form_label(deleteUser_form.user, 'Wybierz użytkownika') }}
+                </div>
+                {{ form_widget(deleteUser_form.user, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(deleteUser_form.user) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(deleteUser_form.submit) }}
+            </div>
+            <div class="edit"></div>
         </div>
-        {#{{ form(form) }}#}
-
-
-        <div class="edit"></div>
-        {#{{ include('admin/_edit_base.html.twig') }}#}
-
     </div>
 {% endblock %}
 {% block javascripts %}
@@ -231,6 +249,12 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.css"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css"></script>
     {{ encore_entry_script_tags('adminpanel') }}
     {# <script src="{{asset('public/js/classes.js') }}"></script> #}
     <script>

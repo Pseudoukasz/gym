@@ -8,6 +8,7 @@ use App\Entity\Rooms;
 use App\Entity\User;
 use App\Entity\Trainers;
 use App\Form\ClassesType;
+use App\Form\DeleteUserType;
 use App\Form\MembershipType;
 use App\Form\RoomsType;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,7 +35,7 @@ class AdminController extends AbstractController
         $addRoomForm = $this->createForm(RoomsType::class);
         $addMembershipTypeForm = $this->createForm(MembershipType::class);
         $editMembershipTypeForm = $this->createForm(MembershipType::class/*, $membershipsType*/);
-
+        $deleteUserTypeForm = $this->createForm(DeleteUserType::class);
 
         $form = $this->createFormBuilder()
             ->add(
@@ -123,12 +124,20 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('admin');
         }
         $editMembershipTypeForm->handleRequest($request);
-
         if ($editMembershipTypeForm->isSubmitted() && $editMembershipTypeForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('admin');
             // return new Response(null, 204);
+        }
+        $deleteUserTypeForm->handleRequest($request);
+        if ($deleteUserTypeForm->isSubmitted()){
+            $deleteFormData = $deleteUserTypeForm->getData();
+            $user = $em->getRepository(User::class)->find($deleteFormData['user']);
+            $user->setRoles(["INACTIVE"]);
+            $em->persist($user);
+            $em->flush();
+            return $this->redirectToRoute('admin');
         }
 
         //dump($users);die;
@@ -142,6 +151,7 @@ class AdminController extends AbstractController
                 'rooms' => $rooms,
                 'membership_form' => $addMembershipTypeForm->createView(),
                 'memberships' => $membershipsTypes,
+                'deleteUser_form' => $deleteUserTypeForm->createView()
                 //'edit_form' => $editMembershipTypeForm->createView(),
             ]
         );
