@@ -61,6 +61,18 @@ class UserPanelController extends AbstractController
         if($trainer != null){
             $userClasses = $em->getRepository(Classes::class)->findBy(['Trainer' => $trainer->getId()]);
             dump($userClasses);
+            $signedUsers = $em->getRepository(SignForClasses::class)->findAll();
+            dump($signedUsers);
+
+            return $this->render('user_panel/index.html.twig', [
+                'controller_name' => 'UserPanelController',
+                'userClasses' => $userClasses,
+                'userData' => $userData,
+                'trainer' => $trainer,
+                'signedUsers' => $signedUsers ? $signedUsers : null,
+                'userMembership' => $userMembership ? $userMembership : null,
+                'form' => $editForm->createView()
+            ]);
         }
 
         return $this->render('user_panel/index.html.twig', [

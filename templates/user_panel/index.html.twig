@@ -77,7 +77,7 @@
                         </tbody>
                     </table><br>
                     <div class="text-center">
-                        <button class="show btn btn-danger">Zmień dane</button>
+                        <button class="show btn btn-danger" data-target="#myModal">Zmień dane</button>
                     </div>
 
                 </div>
@@ -157,11 +157,16 @@
     {# <script src="{{asset('public/js/classes.js') }}"></script> #}
     <script>
 
-        $(document).on('click', '.show', function () {
+        /*$(document).on('click', '.show', function () {
             jQuery.noConflict();
             $("#myModal").modal('show');
+        });*/
+        $(document).on('click', '.show', function (event) {
+            jQuery.noConflict();
+            let target_id = $(event.target).data('target');
+            console.log(target_id);
+            $(target_id).modal('show');
         });
-
         $(document).ready(function () {
             var $wrapper = $('.js-classes-table');
 

@@ -2,23 +2,51 @@
     <tr>
         <td>{{ loop.index }}</td>
         <td>{{ class.name }}</td>
-        <td>{{ class.datestart|date('Y-m-d H:i:s')  }}</td>
-        <td>{{ class.dateend|date('Y-m-d H:i:s')  }}</td>
+        <td>{{ class.datestart|date('Y-m-d H:i:s') }}</td>
+        <td>{{ class.dateend|date('Y-m-d H:i:s') }}</td>
         <td>{{ class.trainer.name }} {{ class.trainer.surname }}</td>
         <td>
-            &nbsp;{#<a href="#"
+            {# <a class="btn btn-primary" data-bs-toggle="collapse" href="#multiCollapseExample1"
+               role="button" aria-expanded="false" aria-controls="multiCollapseExample1">
+                Toggle first element</a> #}
+            <a class="btn btn-primary show"
+               data-target="#myModal_{{ loop.index }}">
+                Lista uczestnikow
+            </a>
+            &nbsp;{# <a href="#"
                      class="js-delete-rep-log"
                      data-url="{{ path('rep_log_delete', {id:class.id}) }}">
                 <span class="fa fa-trash"></span>
-            </a>#}
+            </a> #}
         </td>
     </tr>
+    <div class="modal" id="myModal_{{ loop.index }}" tabindex="-1"
+         role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-body" id="body">
+                        <h3>Lista uczestników</h3><br>
+                        {% set i=1 %}
+                        {% for signedUser in signedUsers %}
+                            {% if signedUser.classes.id == class.id %}
+                                {{ i }} {{ signedUser.user.name }} {{ signedUser.user.surname }}<br>
+                                {% set i=i+1 %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 {% else %}
     <tr>
         <td>{{ loop.index }}</td>
         <td>{{ class.classes.name }}</td>
-        <td>{{ class.classes.datestart|date('Y-m-d H:i:s')  }}</td>
-        <td>{{ class.classes.dateend|date('Y-m-d H:i:s')  }}</td>
+        <td>{{ class.classes.datestart|date('Y-m-d H:i:s') }}</td>
+        <td>{{ class.classes.dateend|date('Y-m-d H:i:s') }}</td>
         <td>{{ class.classes.trainer.name }} {{ class.classes.trainer.surname }}</td>
         <td>
             &nbsp;<a href="#"
@@ -28,4 +56,23 @@
             </a>
         </td>
     </tr>
+
 {% endif %}
+
+{#
+{% block javascripts %}
+#}
+{# {{ parent() }} #}{#
+{{ encore_entry_script_tags('classes') }}
+#}
+{# <script src="{{asset('public/js/classes.js') }}"></script> #}{#
+<script>
+
+    $(document).on('click', '.show', function (event) {
+        jQuery.noConflict();
+        let target_id = event.target.id;
+        $(target_id).modal('show');
+    });
+
+</script>
+{% endblock %} #}
