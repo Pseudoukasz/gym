@@ -45,18 +45,21 @@ class CalendarSubscriber implements EventSubscriberInterface
 
     public function onCalendarSetData(CalendarEvent $calendar)
     {
-        
+        dump($calendar);
         //$start = $calendar->getStart();
         $start='2020-08-10 00:00:00';
         //$dump($start);die;
         $end='2021-08-10 00:00:00';
         //$end = $calendar->getEnd();
         $filters = $calendar->getFilters();
-
+        dump($filters);
         // Modify the query to fit to your entity and needs
         // Change booking.beginAt by your start date property
         //$bookings=$em->getRepository(Classes::class)->findAll();
-        $zajeciaa=$this->classesRepository->findAll();
+        if ($filters['roomId'] == 'all'){
+            $zajeciaa=$this->classesRepository->findAll();
+        } else
+            $zajeciaa=$this->classesRepository->findBy(['room' => $filters['roomId']]);
         /*
         $zajeciaa = $this->zajeciaRepository
             ->createQueryBuilder('classes')

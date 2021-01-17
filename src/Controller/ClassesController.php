@@ -90,10 +90,12 @@ class ClassesController extends AbstractController
             $entityManager->flush();
             return $this->redirectToRoute('zajecia_index');
         }
+        $rooms = $em->getRepository(Rooms::class)->findAll();
 
         return $this->render('classes/index.html.twig', [
             //'classes' => $classesRepository->findAll(),
             'form' => $form->createView(),
+            'rooms' => $rooms
         ]);
     }
 
