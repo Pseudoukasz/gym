@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Classes;
 use App\Entity\Memberships;
+use App\Entity\Reservations;
 use App\Entity\SignForClasses;
 use App\Entity\Trainers;
 use App\Entity\User;
+use App\Form\ReservationType;
 use App\Form\UserType;
 use App\Repository\ClassesRepository;
 use App\Repository\MembershipsRepository;
@@ -48,9 +50,9 @@ class UserPanelController extends AbstractController
         $userClasses = $this->signForClassesRepository->findBy(['user' => $this->security->getUser()]);
         $editForm = $this->createForm(UserType::class, $userData);
         $userMembership =$this->membershipsRepository->findOneBy(['user_id' => $userData->getId()]);
-
+        $reservationForm = $this->createForm(ReservationType::class);
         $editForm->handleRequest($request);
-
+        $userReservations = $em->getRepository(Reservations::class)->findBy(['user' => $userData->getId()]);
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
@@ -60,16 +62,16 @@ class UserPanelController extends AbstractController
         $trainer=$em->getRepository(Trainers::class)->findOneBy(['surname' => $id]);
         if($trainer != null){
             $userClasses = $em->getRepository(Classes::class)->findBy(['Trainer' => $trainer->getId()]);
-            dump($userClasses);
             $signedUsers = $em->getRepository(SignForClasses::class)->findAll();
-            dump($signedUsers);
 
             return $this->render('user_panel/index.html.twig', [
                 'controller_name' => 'UserPanelController',
                 'userClasses' => $userClasses,
                 'userData' => $userData,
                 'trainer' => $trainer,
+                'userReservations' => $userReservations,
                 'signedUsers' => $signedUsers ? $signedUsers : null,
+                'reservationForm' => $reservationForm->createView(),
                 'userMembership' => $userMembership ? $userMembership : null,
                 'form' => $editForm->createView()
             ]);
@@ -80,6 +82,8 @@ class UserPanelController extends AbstractController
             'userClasses' => $userClasses,
             'userData' => $userData,
             'trainer' => $trainer,
+            'userReservations' => $userReservations,
+            'reservationForm' => $reservationForm->createView(),
             'userMembership' => $userMembership ? $userMembership : null,
             'form' => $editForm->createView()
         ]);

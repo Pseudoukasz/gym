@@ -2,6 +2,7 @@
 
 namespace App\EventSubscriber;
 
+use App\Repository\ReservationsRepository;
 use CalendarBundle\Entity\Event;
 use CalendarBundle\CalendarEvents;
 use App\Repository\ClassesRepository;
@@ -18,6 +19,7 @@ class CalendarSubscriber implements EventSubscriberInterface
 {
 
     private $classesRepository;
+    private $reservationsRepository;
     private $signForClassesRepository;
     private $router;
     private $security;
@@ -27,12 +29,14 @@ class CalendarSubscriber implements EventSubscriberInterface
         ClassesRepository $classesRepository,
         UrlGeneratorInterface $router,
         SignForClassesRepository $signForClassesRepository,
-        Security $security
+        Security $security,
+        ReservationsRepository $reservationsRepository
     ) {
         $this->classesRepository = $classesRepository;
         $this->signForClassesRepository = $signForClassesRepository;
         $this->router = $router;
         $this->security = $security;
+        $this->reservationsRepository = $reservationsRepository;
     }
 
 
@@ -60,6 +64,23 @@ class CalendarSubscriber implements EventSubscriberInterface
             $zajeciaa=$this->classesRepository->findAll();
         } else
             $zajeciaa=$this->classesRepository->findBy(['room' => $filters['roomId']]);
+
+        $reservations = $this->reservationsRepository->findBy(['user' =>  $this->security->getUser()]);
+        foreach ($reservations as $reservation){
+            $bookingEvent = new Event(
+                'rezerwacja sali:'.$reservation->getRoom()->getName(),
+                $reservation->getDateStart(),
+                $reservation->getDateEnd()
+            );
+            $bookingEvent->setOptions(
+                [
+                    'backgroundColor' => 'brown',
+                    'borderColor' => 'brown',
+                ]
+            );
+            $calendar->addEvent($bookingEvent);
+        }
+
         /*
         $zajeciaa = $this->zajeciaRepository
             ->createQueryBuilder('classes')
